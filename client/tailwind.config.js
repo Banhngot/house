@@ -3,7 +3,22 @@ module.exports = {
   content: ["./src/**/*.{jsx,js,ts,tsx}", ".public/index.html"],
 
   theme: {
-    extend: {},
+    extend: {
+      width: {
+        1100: "1100px",
+      },
+      backgroundColor: {
+        primary: "#F5F5F5",
+        secondary1: "#FFFD8C",
+        secondary2: "#f73859",
+      },
+      maxWidth: {
+        600: "600px",
+      },
+      cursor: {
+        pointer: "pointer",
+      },
+    },
   },
   plugins: [],
 };
