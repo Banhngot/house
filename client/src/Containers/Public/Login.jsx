@@ -20,7 +20,9 @@ const Login = () => {
 
   const handleSubmit = async () => {
     console.log(payload);
-    dispatch(actions.register(payload));
+    // isRegister
+    //   ? dispatch(actions.register(payload))
+    //   : dispatch(actions.login(payload));
     // console.log(response);
   };
 
