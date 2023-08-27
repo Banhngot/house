@@ -1,6 +1,13 @@
 import React, { memo } from "react";
 
-const InputForm = ({ lable, value, setValue, type }) => {
+const InputForm = ({
+  lable,
+  value,
+  setValue,
+  type,
+  invalidFiels,
+  setInvalidFiels,
+}) => {
   return (
     <div>
       <lable htlmFor="phone">{lable}</lable>
@@ -12,7 +19,13 @@ const InputForm = ({ lable, value, setValue, type }) => {
         onChange={(e) =>
           setValue((prev) => ({ ...prev, [type]: e.target.value }))
         }
+        onFocus={() => setInvalidFiels([])}
       />
+      {invalidFiels.length > 0 && invalidFiels.some((i) => i.name === type) && (
+        <small className="text-red-500 italic">
+          {invalidFiels.find((i) => i.name === type)?.message}
+        </small>
+      )}
     </div>
   );
 };

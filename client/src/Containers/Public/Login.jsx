@@ -9,6 +9,7 @@ const Login = () => {
   const location = useLocation();
   const dispatch = useDispatch();
   const [isRegister, setRegister] = useState(location.state?.flag);
+  const [invalidFiels, setInvalidFiels] = useState([]);
   const [payload, setPayload] = useState({
     phone: "",
     password: "",
@@ -19,11 +20,66 @@ const Login = () => {
   }, [location.state?.flag]);
 
   const handleSubmit = async () => {
-    console.log(payload);
+    // console.log(payload);
     // isRegister
     //   ? dispatch(actions.register(payload))
     //   : dispatch(actions.login(payload));
     // console.log(response);
+    let invalids = validate(payload);
+    console.log(invalids);
+  };
+  console.log(invalidFiels);
+
+  const validate = (payload) => {
+    console.log(payload);
+    let invalids = 0;
+    let fields = Object.entries(payload);
+    console.log(fields);
+    fields.forEach((item) => {
+      if (item[1] === "") {
+        setInvalidFiels((prev) => [
+          ...prev,
+          {
+            name: item[0],
+            message: "You do not empty",
+          },
+        ]);
+        invalids++;
+      }
+    });
+    fields.forEach((item) => {
+      switch (item[0]) {
+        case "password":
+          if (item[1].length < 6) {
+            setInvalidFiels((prev) => [
+              ...prev,
+              {
+                name: item[0],
+                message: "Password must have 6 character",
+              },
+            ]);
+            invalids++;
+          }
+          break;
+        case "phone":
+          console.log(typeof +item[1]);
+          if (!+item[1]) {
+            setInvalidFiels((prev) => [
+              ...prev,
+              {
+                name: item[0],
+                message: "number invalid",
+              },
+            ]);
+            invalids++;
+          }
+          break;
+
+        default:
+          break;
+      }
+    });
+    return invalids;
   };
 
   return (
@@ -34,6 +90,8 @@ const Login = () => {
       <div className="w-full flex flex-col gap-3">
         {isRegister && (
           <InputForm
+            setInvalidFiels={setInvalidFiels}
+            invalidFiels={invalidFiels}
             lable={"Full Name"}
             value={payload.name}
             setValue={setPayload}
@@ -41,12 +99,16 @@ const Login = () => {
           />
         )}
         <InputForm
+          setInvalidFiels={setInvalidFiels}
+          invalidFiels={invalidFiels}
           lable={"Phone"}
           value={payload.phone}
           setValue={setPayload}
           type={"phone"}
         />
         <InputForm
+          setInvalidFiels={setInvalidFiels}
+          invalidFiels={invalidFiels}
           lable={"Password"}
           value={payload.password}
           setValue={setPayload}
