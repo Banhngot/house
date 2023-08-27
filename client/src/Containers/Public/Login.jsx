@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { InputForm, Button } from "../../Component";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import * as actions from "../../Store/actions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const Login = () => {
   const location = useLocation();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { isLoggedIn } = useSelector((state) => state.auth);
   const [isRegister, setRegister] = useState(location.state?.flag);
   const [invalidFiels, setInvalidFiels] = useState([]);
   const [payload, setPayload] = useState({
@@ -19,22 +21,30 @@ const Login = () => {
     setRegister(location.state?.flag);
   }, [location.state?.flag]);
 
+  useEffect(() => {
+    isLoggedIn && navigate("/");
+  }, [isLoggedIn]);
+
   const handleSubmit = async () => {
-    // console.log(payload);
-    // isRegister
-    //   ? dispatch(actions.register(payload))
-    //   : dispatch(actions.login(payload));
-    // console.log(response);
-    let invalids = validate(payload);
+    let finalPayload = isRegister
+      ? payload
+      : {
+          phone: payload.phone,
+          password: payload.password,
+        };
+    let invalids = validate(finalPayload);
+    if (invalids === 0)
+      isRegister
+        ? dispatch(actions.register(payload))
+        : dispatch(actions.login(payload));
+
     console.log(invalids);
   };
-  console.log(invalidFiels);
 
   const validate = (payload) => {
-    console.log(payload);
     let invalids = 0;
     let fields = Object.entries(payload);
-    console.log(fields);
+
     fields.forEach((item) => {
       if (item[1] === "") {
         setInvalidFiels((prev) => [
@@ -62,7 +72,6 @@ const Login = () => {
           }
           break;
         case "phone":
-          console.log(typeof +item[1]);
           if (!+item[1]) {
             setInvalidFiels((prev) => [
               ...prev,
@@ -129,6 +138,11 @@ const Login = () => {
             <span
               onClick={() => {
                 setRegister(false);
+                setPayload({
+                  phone: "",
+                  password: "",
+                  name: "",
+                });
               }}
               className="text-yellow-500 hover:underline"
             >
@@ -143,6 +157,11 @@ const Login = () => {
             <small
               onClick={() => {
                 setRegister(true);
+                setPayload({
+                  phone: "",
+                  password: "",
+                  name: "",
+                });
               }}
               className="text-[blue] hover:text-[orange] cursor-pointer"
             >

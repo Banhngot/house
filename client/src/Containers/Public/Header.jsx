@@ -4,11 +4,14 @@ import { Button } from "../../Component";
 import icons from "../../Ultils/icons";
 import { useNavigate, Link } from "react-router-dom";
 import { path } from "../../Ultils/constant";
-// import Navigation from "./Navigation";
+import { useSelector, useDispatch } from "react-redux";
+import * as actions from "../../Store/actions";
 
 const { AiOutlinePlusCircle } = icons;
 const Header = () => {
   const navigate = useNavigate();
+  const { isLoggedIn } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
   const goLogin = useCallback((flag) => {
     navigate(path.LOGIN, { state: { flag } });
   }, []);
@@ -24,19 +27,34 @@ const Header = () => {
           />
         </Link>
         <div className="flex items-center gap-1">
-          <small>Dreamhouse.com xin chào !</small>
-          <Button
-            text={"Login"}
-            textColor="text-black"
-            bgColor="bg-[#FFFD8C]"
-            onClick={() => goLogin(false)}
-          />
-          <Button
-            text={"Register"}
-            textColor="text-black"
-            bgColor="bg-[#FFFD8C]"
-            onClick={() => goLogin(true)}
-          />
+          {!isLoggedIn && (
+            <div className="flex items-center gap-1">
+              <small>Dreamhouse.com xin chào !</small>
+              <Button
+                text={"Login"}
+                textColor="text-black"
+                bgColor="bg-[#FFFD8C]"
+                onClick={() => goLogin(false)}
+              />
+              <Button
+                text={"Register"}
+                textColor="text-black"
+                bgColor="bg-[#FFFD8C]"
+                onClick={() => goLogin(true)}
+              />
+            </div>
+          )}
+          {isLoggedIn && (
+            <div className="flex items-center gap-1">
+              <small>Name !</small>
+              <Button
+                text={"Logout"}
+                textColor="text-black"
+                bgColor="bg-[#F8DE22]"
+                onClick={() => dispatch(actions.logout())}
+              />
+            </div>
+          )}
           <Button
             text={"Post"}
             textColor="text-black"
