@@ -1,8 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { InputForm, Button } from "../../Component";
+import { useLocation } from "react-router-dom";
 
 const Login = () => {
-  const [isRegister, setRegister] = useState(false);
+  const location = useLocation();
+  const [isRegister, setRegister] = useState(location.state?.flag);
+  useEffect(() => {
+    setRegister(location.state?.flag);
+  }, [location.state?.flag]);
 
   return (
     <div className="bg-white w-[600px] p-[30px] pb-[100px] rounded-sm shadow-sm">
