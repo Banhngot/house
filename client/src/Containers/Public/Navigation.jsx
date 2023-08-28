@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { apiGetCategories } from "../../Service/category";
-import { formatVietnameseToString } from "../../Ultils/constant";
+import { formatVietnameseToString } from "../../Ultils/Common/formatVietnameseToString";
 
 const notActive =
   "hover:bg-[#FFBA86]  px-4 h-full flex items-center bg-bg-[#FF9900]";

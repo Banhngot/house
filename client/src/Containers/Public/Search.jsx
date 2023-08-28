@@ -12,7 +12,7 @@ const {
 } = icons;
 const Search = () => {
   return (
-    <div className=" p-[10px] bg-[#EE7621] rounded-lg flex-col lg:flex-row flex items-center justify-around gap-2">
+    <div className=" p-[10px] w-3/5 my-3 bg-[#EE7621] rounded-lg flex-col lg:flex-row flex items-center justify-around gap-2">
       <SearchItem
         IconBefore={<BsFillHouseHeartFill />}
         fontWeigh
