@@ -5,6 +5,10 @@ import { BiMoney } from "react-icons/bi";
 import { BiArea } from "react-icons/bi";
 import { BsFillHouseHeartFill } from "react-icons/bs";
 import { BsSearchHeart } from "react-icons/bs";
+import { IoMdStar } from "react-icons/io";
+import { AiFillHeart } from "react-icons/ai";
+import { AiOutlineHeart } from "react-icons/ai";
+import { BsBookmarkStarFill } from "react-icons/bs";
 
 const icons = {
   AiOutlinePlusCircle,
@@ -14,6 +18,10 @@ const icons = {
   BiArea,
   BsFillHouseHeartFill,
   BsSearchHeart,
+  IoMdStar,
+  AiFillHeart,
+  AiOutlineHeart,
+  BsBookmarkStarFill,
 };
 
 export default icons;

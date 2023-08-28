@@ -8,3 +8,4 @@ export { default as RentalSpace } from "./RentalSpace";
 export { default as RentalApartment } from "./RentalApartment";
 export { default as HomePage } from "./HomePage";
 export { default as Search } from "./Search";
+export { default as List } from "./List";
