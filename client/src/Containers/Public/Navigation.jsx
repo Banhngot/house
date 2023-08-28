@@ -4,7 +4,7 @@ import { apiGetCategories } from "../../Service/category";
 import { formatVietnameseToString } from "../../Ultils/constant";
 
 const notActive =
-  "hover:bg-[#FFBA86]  px-4 h-full flex items-center bg-secondary1";
+  "hover:bg-[#FFBA86]  px-4 h-full flex items-center bg-bg-[#FF9900]";
 const active = "hover:bg-[#FFBA86]  px-4 h-full flex items-center bg-[#FFBA86]";
 
 const Navigation = () => {
@@ -20,8 +20,8 @@ const Navigation = () => {
   }, []);
 
   return (
-    <div className="w-screen flex justify-center items-center h-[40px]  bg-secondary1 text-white">
-      <div className="w-1100 flex h-full items-center gap-3 text-black text-sm font-medium">
+    <div className="w-screen flex justify-center items-center h-[40px]  bg-[#FF9900] text-white">
+      <div className="w-3/5 flex h-full items-center gap-3 text-black text-sm font-medium">
         <NavLink
           to={`/`}
           className={({ isActive }) => (isActive ? active : notActive)}

@@ -17,13 +17,13 @@ const Header = () => {
   }, []);
 
   return (
-    <div className="w-1100">
+    <div className="w-3/5">
       <div className="w-full flex items-center justify-between">
         <Link to={"/"}>
           <img
             src={logo}
             alt="logo"
-            className="w-[240px] h-[110px] object-contain"
+            className="w-[240px] h-[110px]  object-contain"
           />
         </Link>
         <div className="flex items-center gap-1">
@@ -33,13 +33,13 @@ const Header = () => {
               <Button
                 text={"Login"}
                 textColor="text-black"
-                bgColor="bg-[#FFFD8C]"
+                bgColor="bg-[#FF9900]"
                 onClick={() => goLogin(false)}
               />
               <Button
                 text={"Register"}
                 textColor="text-black"
-                bgColor="bg-[#FFFD8C]"
+                bgColor="bg-[#FF9900]"
                 onClick={() => goLogin(true)}
               />
             </div>
@@ -50,7 +50,7 @@ const Header = () => {
               <Button
                 text={"Logout"}
                 textColor="text-black"
-                bgColor="bg-[#F8DE22]"
+                bgColor="bg-[#FF9900]"
                 onClick={() => dispatch(actions.logout())}
               />
             </div>
@@ -58,7 +58,7 @@ const Header = () => {
           <Button
             text={"Post"}
             textColor="text-black"
-            bgColor="bg-[#FFFD8C]"
+            bgColor="bg-[#FF9900]"
             IcAfter={AiOutlinePlusCircle}
           />
         </div>
