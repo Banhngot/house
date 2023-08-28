@@ -3,10 +3,13 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { v4 } from "uuid";
 import chothuecanho from "../../data/chothuecanho.json";
+import chothuematbang from "../../data/chothuematbang.json";
+import chothuephongtro from "../../data/chothuephongtro.json";
+import nhachothue from "../../data/nhachothue.json";
 import generateCode from "../ultils/generateCode";
 require("dotenv").config();
 
-const dataBody = chothuecanho.body;
+const dataBody = nhachothue.body;
 
 const hashPassword = (password) =>
   bcrypt.hashSync(password, bcrypt.genSaltSync(12));
@@ -28,7 +31,7 @@ export const insertService = () =>
           labelCode,
           address: item?.header?.address,
           attributesId,
-          categoryCode: "CTCH",
+          categoryCode: "NCT",
           description: JSON.stringify(item?.mainContent?.content),
           userId,
           overviewId,
@@ -64,18 +67,18 @@ export const insertService = () =>
             ?.content,
           created: item?.overview?.content.find((i) => i.name === "Ngày đăng:")
             ?.content,
-          expire: item?.overview?.content.find(
+          expired: item?.overview?.content.find(
             (i) => i.name === "Ngày hết hạn:"
           )?.content,
         });
         await db.User.create({
           id: userId,
-          name: item?.overview?.content.find((i) => i.name === "Liên hệ:")
+          name: item?.contact?.content.find((i) => i.name === "Liên hệ:")
             ?.content,
           password: hashPassword("123456"),
-          phone: item?.overview?.content.find((i) => i.name === "Điện thoại:")
+          phone: item?.contact?.content.find((i) => i.name === "Điện thoại:")
             ?.content,
-          zalo: item?.overview?.content.find((i) => i.name === "Zalo")?.content,
+          zalo: item?.contact?.content.find((i) => i.name === "Zalo")?.content,
         });
       });
 
