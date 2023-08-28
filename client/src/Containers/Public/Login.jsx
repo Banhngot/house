@@ -4,12 +4,13 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 import * as actions from "../../Store/actions";
 import { useDispatch, useSelector } from "react-redux";
+import Swal from "sweetalert2";
 
 const Login = () => {
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isLoggedIn } = useSelector((state) => state.auth);
+  const { isLoggedIn, msg, update } = useSelector((state) => state.auth);
   const [isRegister, setRegister] = useState(location.state?.flag);
   const [invalidFiels, setInvalidFiels] = useState([]);
   const [payload, setPayload] = useState({
@@ -24,6 +25,10 @@ const Login = () => {
   useEffect(() => {
     isLoggedIn && navigate("/");
   }, [isLoggedIn]);
+
+  useEffect(() => {
+    msg && Swal.fire("Oops !", msg, "error");
+  }, [msg, update]);
 
   const handleSubmit = async () => {
     let finalPayload = isRegister
@@ -104,7 +109,7 @@ const Login = () => {
             lable={"Full Name"}
             value={payload.name}
             setValue={setPayload}
-            type={"name"}
+            keyPayload={"name"}
           />
         )}
         <InputForm
@@ -113,7 +118,7 @@ const Login = () => {
           lable={"Phone"}
           value={payload.phone}
           setValue={setPayload}
-          type={"phone"}
+          keyPayload={"phone"}
         />
         <InputForm
           setInvalidFiels={setInvalidFiels}
@@ -121,7 +126,8 @@ const Login = () => {
           lable={"Password"}
           value={payload.password}
           setValue={setPayload}
-          type={"password"}
+          keyPayload={"password"}
+          type="password"
         />
         <Button
           text={isRegister ? "Register" : "Login"}
