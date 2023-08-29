@@ -9,7 +9,7 @@ const Home = () => {
       <Header />
       <Navigation />
       <Search />
-      <div className="w-4/5 lg:w-3/5 border border-red-500  flex flex-col items-start justify-start mt-3">
+      <div className="w-[75%]   border border-red-500  flex flex-col items-start justify-start mt-3">
         <Outlet />
       </div>
     </div>

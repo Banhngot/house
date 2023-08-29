@@ -20,8 +20,8 @@ const Navigation = () => {
   }, []);
 
   return (
-    <div className="w-full flex justify-center items-center h-[40px]  bg-[#FF9900] text-white">
-      <div className="w-3/5 flex h-full items-center gap-3 text-black text-sm font-medium">
+    <div className="w-full flex justify-center items-center  h-[40px]  bg-[#FF9900] text-white">
+      <div className="w-[75%] flex h-full items-center gap-3 text-black text-sm font-medium">
         <NavLink
           to={`/`}
           className={({ isActive }) => (isActive ? active : notActive)}

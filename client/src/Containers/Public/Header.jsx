@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import logo from "../../assests/logo.png";
+import logo2 from "../../assests/logo2.png";
 import { Button } from "../../Component";
 import icons from "../../Ultils/icons";
 import { useNavigate, Link } from "react-router-dom";
@@ -17,13 +17,13 @@ const Header = () => {
   }, []);
 
   return (
-    <div className="w-3/5">
+    <div className="w-[65%]">
       <div className="w-full flex items-center justify-between">
         <Link to={"/"}>
           <img
-            src={logo}
+            src={logo2}
             alt="logo"
-            className="w-[240px] h-[70px] object-contain"
+            className="w-[240px] h-[90px] object-cover"
           />
         </Link>
         <div className="flex items-center gap-1">
