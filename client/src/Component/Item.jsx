@@ -13,7 +13,7 @@ const Item = ({
   address,
 }) => {
   const [isHoverHeart, setHorverHeart] = useState(false);
-  console.log(isHoverHeart);
+
   return (
     <div className="w-full flex border-t border-orange-600 py-4">
       <div className="w-2/5 flex flex-wrap gap-[2px] items-center relative cursor-pointer">
