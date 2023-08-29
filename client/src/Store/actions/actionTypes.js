@@ -4,6 +4,8 @@ const actionTypes = {
   LOGOUT: "LOGOUT",
   LOGIN_SUCCESS: "LOGIN",
   LOGIN_FAIL: "LOGIN",
+
+  GET_POSTS: "GET_POSTS",
 };
 
 export default actionTypes;
