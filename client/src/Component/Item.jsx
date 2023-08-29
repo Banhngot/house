@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
 import icons from "../Ultils/icons";
 
 const images = [
@@ -10,9 +10,11 @@ const images = [
 
 const { IoMdStar, AiFillHeart, AiOutlineHeart, BsBookmarkStarFill } = icons;
 const Item = () => {
+  const [isHoverHeart, setHorverHeart] = useState(false);
+  console.log(isHoverHeart);
   return (
     <div className="w-full flex border-t border-orange-600 p-4">
-      <div className="w-2/5 flex flex-wrap gap-[2px] items-center ">
+      <div className="w-2/5 flex flex-wrap gap-[2px] items-center relative">
         <img
           src={images[0]}
           alt="preview"
@@ -33,6 +35,20 @@ const Item = () => {
           alt="preview"
           className="w-[140px] h-[120px]  object-cover"
         />
+        <span className="bg-overlay-70 text-white px-2 rounded-md absolute left-1 bottom-1">
+          4 ảnh
+        </span>
+        <div
+          className="text-white absolute right-5 bottom-1"
+          onMouseEnter={() => setHorverHeart(true)}
+          onMouseLeave={() => setHorverHeart(false)}
+        >
+          {isHoverHeart ? (
+            <AiFillHeart size={26} color="red" />
+          ) : (
+            <AiOutlineHeart size={26} />
+          )}
+        </div>
       </div>
       <div className="w-3/5">
         <div className="flex justify-between gap-4">
