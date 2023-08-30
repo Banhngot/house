@@ -1,16 +1,17 @@
 import React, { useEffect } from "react";
 import { Button, Item } from "../../Component";
-import { getPosts } from "../../Store/actions/post";
+import { getPosts, getPostsLimit } from "../../Store/actions/post";
 import { useDispatch, useSelector } from "react-redux";
 
-const List = () => {
+const List = ({ page }) => {
   const dispatch = useDispatch();
   const { posts } = useSelector((state) => state.post);
 
   useEffect(() => {
-    dispatch(getPosts());
-  }, []);
-  console.log(posts);
+    let offset = page ? +page - 1 : 0;
+    dispatch(getPostsLimit(offset));
+  }, [page]);
+
   return (
     <div className="w-full p-2 bg-white shadow-md rounded-md px-6">
       <div className="flex items-center justify-between my-3">

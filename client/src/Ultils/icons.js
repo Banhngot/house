@@ -9,6 +9,8 @@ import { IoMdStar } from "react-icons/io";
 import { AiFillHeart } from "react-icons/ai";
 import { AiOutlineHeart } from "react-icons/ai";
 import { BsBookmarkStarFill } from "react-icons/bs";
+import { GrLinkNext } from "react-icons/gr";
+import { GrLinkPrevious } from "react-icons/gr";
 
 const icons = {
   AiOutlinePlusCircle,
@@ -22,6 +24,8 @@ const icons = {
   AiFillHeart,
   AiOutlineHeart,
   BsBookmarkStarFill,
+  GrLinkNext,
+  GrLinkPrevious,
 };
 
 export default icons;
