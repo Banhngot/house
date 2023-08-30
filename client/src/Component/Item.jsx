@@ -1,5 +1,6 @@
 import React, { memo, useState } from "react";
 import icons from "../Ultils/icons";
+import { useNavigate, Link } from "react-router-dom";
 
 const indexs = [0, 1, 2, 3];
 const { IoMdStar, AiFillHeart, AiOutlineHeart, BsBookmarkStarFill } = icons;
@@ -11,8 +12,11 @@ const Item = ({
   description,
   attributes,
   address,
+  id,
 }) => {
   const [isHoverHeart, setHorverHeart] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleStar = (star) => {
     let stars = [];
@@ -24,7 +28,10 @@ const Item = ({
 
   return (
     <div className="w-full flex border-t border-orange-600 py-4">
-      <div className="w-2/5 flex flex-wrap gap-[2px] items-center relative cursor-pointer">
+      <Link
+        to={`chi-tiet/${title}/${id}`}
+        className="w-2/5 flex flex-wrap gap-[2px] items-center relative cursor-pointer"
+      >
         {images.length > 0 &&
           images
             .filter((i, index) => indexs.some((i) => i === index))
@@ -52,7 +59,7 @@ const Item = ({
             <AiOutlineHeart size={26} />
           )}
         </div>
-      </div>
+      </Link>
       <div className="w-3/5">
         <div className="flex justify-between gap-4">
           <div className="text-red-600 font-medium ">

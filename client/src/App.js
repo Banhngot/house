@@ -7,6 +7,7 @@ import {
   RentalRoom,
   RentalSpace,
   HomePage,
+  DetailPost,
 } from "./Containers/Public";
 import { path } from "./Ultils/constant";
 function App() {
@@ -21,6 +22,10 @@ function App() {
           <Route path={path.CHO_THUE_MAT_BANG} element={<RentalSpace />} />
           <Route path={path.CHO_THUE_PHONG_TR0} element={<RentalRoom />} />
           <Route path={path.NHA_CHO_THUE} element={<RentalHouse />} />
+          <Route
+            path={path.DETAIL_POST__TITLE__POSTID}
+            element={<DetailPost />}
+          />
         </Route>
       </Routes>
     </div>
