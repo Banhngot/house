@@ -1,9 +1,9 @@
 import actionTypes from "./actionTypes";
-import { apiGetCategories } from "../../Service/category";
+import * as apis from "../../Service/";
 
 export const getCategories = () => async (dispatch) => {
   try {
-    const response = await apiGetCategories();
+    const response = await apis.apiGetCategories();
 
     if (response?.data.err === 0) {
       dispatch({
@@ -21,6 +21,30 @@ export const getCategories = () => async (dispatch) => {
     dispatch({
       type: actionTypes.GET_CATEGORIES,
       categories: null,
+    });
+  }
+};
+
+export const getPrices = () => async (dispatch) => {
+  try {
+    const response = await apis.apiGetPrices();
+
+    if (response?.data.err === 0) {
+      dispatch({
+        type: actionTypes.GET_PRICE,
+        prices: response.data.response,
+      });
+    } else {
+      dispatch({
+        type: actionTypes.GET_PRICE,
+        msg: response.data.mgs,
+        prices: null,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: actionTypes.GET_PRICE,
+      prices: null,
     });
   }
 };

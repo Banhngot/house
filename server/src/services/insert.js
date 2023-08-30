@@ -11,7 +11,7 @@ import { dataPrice, dataArea } from "../ultils/data";
 import { getNumberFromString } from "../ultils/common";
 require("dotenv").config();
 
-const dataBody = nhachothue.body;
+const dataBody = chothuephongtro.body;
 
 // const prices =
 
@@ -39,7 +39,7 @@ export const insertService = () =>
           labelCode,
           address: item?.header?.address,
           attributesId,
-          categoryCode: "NCT",
+          categoryCode: "CTPT",
           description: JSON.stringify(item?.mainContent?.content),
           userId,
           overviewId,
