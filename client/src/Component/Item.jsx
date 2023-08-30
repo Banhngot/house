@@ -14,6 +14,14 @@ const Item = ({
 }) => {
   const [isHoverHeart, setHorverHeart] = useState(false);
 
+  const handleStar = (star) => {
+    let stars = [];
+    for (let i = 1; i <= +star; i++) {
+      stars.push(<IoMdStar className="star-item" size={20} color="yellow" />);
+    }
+    return stars;
+  };
+
   return (
     <div className="w-full flex border-t border-orange-600 py-4">
       <div className="w-2/5 flex flex-wrap gap-[2px] items-center relative cursor-pointer">
@@ -48,11 +56,10 @@ const Item = ({
       <div className="w-3/5">
         <div className="flex justify-between gap-4">
           <div className="text-red-600 font-medium ">
-            <IoMdStar className="star-item" size={20} color="yellow" />
-            <IoMdStar className="star-item" size={20} color="yellow" />
-            <IoMdStar className="star-item" size={20} color="yellow" />
-            <IoMdStar className="star-item" size={20} color="yellow" />
-            <IoMdStar className="star-item" size={20} color="yellow" />
+            {handleStar(+star).length > 0 &&
+              handleStar(star).map((star, number) => {
+                return <span key={number}>{star}</span>;
+              })}
             {title}
           </div>
           <div className="w-[10%] flex justify-end">
