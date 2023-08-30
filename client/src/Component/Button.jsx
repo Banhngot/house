@@ -1,7 +1,6 @@
 import React, { memo } from "react";
 
 const Button = ({ text, textColor, bgColor, IcAfter, onClick, fullWidth }) => {
-  console.log(IcAfter);
   return (
     <button
       type="button"
