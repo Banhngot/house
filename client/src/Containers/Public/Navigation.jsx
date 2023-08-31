@@ -12,7 +12,6 @@ const active = "hover:bg-[#FFBA86]  px-4 h-full flex items-center bg-[#FFBA86]";
 const Navigation = () => {
   const dispatch = useDispatch();
   const { categories } = useSelector((state) => state.app);
-  console.log(categories);
   useEffect(() => {
     dispatch(actions.getCategories());
   }, []);

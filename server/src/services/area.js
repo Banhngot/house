@@ -1,10 +1,10 @@
 import db from "../models";
 
 // Get all category
-export const getPricesService = () =>
+export const getAreaService = () =>
   new Promise(async (resolve, reject) => {
     try {
-      const response = await db.Price.findAll({
+      const response = await db.Area.findAll({
         raw: true,
         attributes: ["code", "value", "order"],
       });
