@@ -38,7 +38,7 @@ export const prices = [
   },
 ];
 
-const area = [
+const areas = [
   {
     min: 0,
     max: 20,
@@ -76,7 +76,7 @@ export const dataPrice = prices.map((item) => ({
   code: generateCode(item.value),
 }));
 
-export const dataArea = area.map((item) => ({
+export const dataArea = areas.map((item) => ({
   ...item,
   code: generateCode(item.value),
 }));

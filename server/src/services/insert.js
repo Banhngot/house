@@ -9,6 +9,7 @@ import nhachothue from "../../data/nhachothue.json";
 import generateCode from "../ultils/generateCode";
 import { dataPrice, dataArea } from "../ultils/data";
 import { getNumberFromString } from "../ultils/common";
+
 require("dotenv").config();
 
 const dataBody = chothuephongtro.body;
@@ -28,6 +29,7 @@ export const insertService = () =>
         let userId = v4();
         let overviewId = v4();
         let imagesId = v4();
+        let desc = JSON.stringify(item?.mainContent?.content);
         let currentArea = getNumberFromString(
           item?.header?.attributes?.acreage
         );
@@ -48,7 +50,7 @@ export const insertService = () =>
             (area) => area.max > currentArea && area.min <= currentArea
           )?.code,
           priceCode: dataPrice.find(
-            (price) => price.max > currentPrice && price.min <= currentPrice
+            (area) => area.max > currentPrice && area.min <= currentPrice
           )?.code,
         });
 
@@ -70,6 +72,7 @@ export const insertService = () =>
             value: item?.header?.class?.classType,
           },
         });
+
         await db.Overview.create({
           id: overviewId,
           code: item?.overview?.content.find((i) => i.name === "Mã tin:")
@@ -98,6 +101,20 @@ export const insertService = () =>
             ?.content,
           zalo: item?.contact?.content.find((i) => i.name === "Zalo")?.content,
         });
+        // dataPrice.forEach(async (item) => {
+        //   await db.Price.create({
+        //     id: v4(),
+        //     code: item.code,
+        //     value: item.value,
+        //   });
+        // });
+        // dataArea.forEach(async (item) => {
+        //   await db.Area.create({
+        //     id: v4(),
+        //     code: item.code,
+        //     value: item.value,
+        //   });
+        // });
       });
 
       resolve("Done");
@@ -106,25 +123,25 @@ export const insertService = () =>
     }
   });
 
-export const cretePricesAndAreas = () =>
-  new Promise(async (resolve, reject) => {
-    try {
-      dataPrice.forEach(async (item) => {
-        await db.Price.create({
-          id: v4(),
-          code: item.code,
-          value: item.value,
-        });
-      });
-      dataArea.forEach(async (item) => {
-        await db.Area.create({
-          id: v4(),
-          code: item.code,
-          value: item.value,
-        });
-      });
-      resolve("Ok");
-    } catch (error) {
-      reject(error);
-    }
-  });
+// export const createPricesAndAreas = () =>
+//   new Promise((resolve, reject) => {
+//     try {
+//       dataPrice.forEach(async (item) => {
+//         await db.Price.create({
+//           id: v4(),
+//           code: item.code,
+//           value: item.value,
+//         });
+//       });
+//       dataArea.forEach(async (item) => {
+//         await db.Area.create({
+//           id: v4(),
+//           code: item.code,
+//           value: item.value,
+//         });
+//       });
+//       resolve("OK");
+//     } catch (err) {
+//       reject(err);
+//     }
+//   });
