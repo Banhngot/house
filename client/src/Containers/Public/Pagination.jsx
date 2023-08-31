@@ -2,15 +2,24 @@ import React, { useEffect, useState } from "react";
 import { PageNumber } from "../../Component";
 import { useSelector } from "react-redux";
 import icons from "../../Ultils/icons";
+import { useSearchParams } from "react-router-dom";
 
 const { GrLinkNext, GrLinkPrevious } = icons;
 
 const Pagination = ({ page }) => {
   const { count, posts } = useSelector((state) => state.post);
   const [arrPage, setArrPage] = useState([]);
-  const [currentPage, setCurrentPage] = useState(+page || 1);
+  const [currentPage, setCurrentPage] = useState(1);
   const [isHideEnd, setIsHideEnd] = useState(false);
   const [isHideStart, setisHideStart] = useState(false);
+  const [searchParams] = useSearchParams();
+
+  useEffect(() => {
+    let page = searchParams.get("page");
+    page && +page !== currentPage && setCurrentPage(+page);
+    !page && setCurrentPage(1);
+  }, [searchParams]);
+
   useEffect(() => {
     let maxPage = Math.ceil(count / process.env.REACT_APP_LIMIT_POSTS);
     let start = currentPage - 1 <= 0 ? 1 : currentPage - 1;
@@ -21,7 +30,7 @@ const Pagination = ({ page }) => {
     for (let i = start; i <= end; i++) temp.push(i);
     setArrPage(temp);
     currentPage >= maxPage - 1 ? setIsHideEnd(true) : setIsHideEnd(false);
-    currentPage <= maxPage - 2 ? setisHideStart(true) : setisHideStart(false);
+    currentPage <= 2 ? setisHideStart(true) : setisHideStart(false);
   }, [count, posts, currentPage]);
 
   return (
