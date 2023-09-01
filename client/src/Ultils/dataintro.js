@@ -1,7 +1,9 @@
 export const text = {
   title: "Tại sao bạn nên chọn Dream House ?",
   description:
-    "Chúng tôi biết bạn có nhiều sự lựa chọn, nhưng Dream House tự hào là trang tìm kiếm về các từ khóa: cho thuê phòng trọ, nhà cho thuê,... Vì vậy tin bạn đang trên website hay những bạn đang tìm kiếm chỗ ở ứng ý... Website sẽ đáp ứng được những yêu cầu mà bạn mong muốn.",
+    "Chúng tôi biết bạn có nhiều sự lựa chọn, nhưng Dream House tự hào là trang tìm kiếm về các từ khóa: ",
+  description2:
+    "...Vì vậy tin bạn đang trên website hay những bạn đang tìm kiếm chỗ ở ứng ý... Website sẽ đáp ứng được những yêu cầu mà bạn mong muốn.",
   statistic: [
     {
       name: "Thành viên",
