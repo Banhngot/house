@@ -8,3 +8,5 @@ export { default as PageNumber } from "./PageNumber";
 export { default as ItemSidebar } from "./ItemSidebar";
 export { default as Intro } from "./Intro";
 export { default as Contact } from "./Contact";
+export { default as RelatePost } from "./RelatePost";
+export { default as Sitem } from "./Sitem";

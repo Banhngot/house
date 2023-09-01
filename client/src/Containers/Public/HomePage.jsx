@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
 import { text } from "../../Ultils/constant";
-import { Province, ItemSidebar } from "../../Component";
+import { Province, ItemSidebar, RelatePost } from "../../Component";
 import { List, Pagination } from "./index";
-
 import { useSelector, useDispatch } from "react-redux";
 import * as actions from "../../Store/actions";
 
@@ -41,6 +40,7 @@ const HomePage = () => {
             content={areas}
             title="Xem theo diện tích"
           />
+          <RelatePost />
         </div>
       </div>
     </div>
