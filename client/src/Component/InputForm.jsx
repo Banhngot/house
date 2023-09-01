@@ -11,10 +11,10 @@ const InputForm = ({
 }) => {
   return (
     <div>
-      <lable htlmFor="phone">{lable}</lable>
+      <lable htlmFor={keyPayload}>{lable}</lable>
       <input
         type={type || "text"}
-        id="phone"
+        id={keyPayload}
         className="outline-none bg-[#e8f0fe] p-2  rounded-md w-full"
         value={value}
         onChange={(e) =>

@@ -27,7 +27,7 @@ const Login = () => {
   }, [isLoggedIn]);
 
   useEffect(() => {
-    msg && Swal.fire("Oops !", msg, "error");
+    msg && Swal.fire("Oops", msg, "error");
   }, [msg, update]);
 
   const handleSubmit = async () => {
