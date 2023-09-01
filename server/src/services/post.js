@@ -76,16 +76,8 @@ export const getNewPostService = () =>
             as: "attributes",
             attributes: ["price", "acreage", "published", "hashtag"],
           },
-          { model: db.User, as: "user", attributes: ["name", "zalo", "phone"] },
         ],
-        attributes: [
-          "id",
-          "title",
-          "star",
-          "address",
-          "description",
-          "createdAt",
-        ],
+        attributes: ["id", "title", "star", "createdAt"],
       });
       resolve({
         err: response ? 0 : 1,
