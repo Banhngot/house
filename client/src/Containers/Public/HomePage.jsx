@@ -38,6 +38,7 @@ const HomePage = () => {
           />
           <ItemSidebar
             isDouble={true}
+            type="areaCode"
             content={areas}
             title="Xem theo diện tích"
           />
