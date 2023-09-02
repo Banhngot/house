@@ -13,10 +13,22 @@ import { getNumberFromString } from "../ultils/common";
 require("dotenv").config();
 
 const dataBody = [
-  chothuephongtro.body,
-  chothuematbang.body,
-  chothuecanho.body,
-  nhachothue.body,
+  {
+    body: chothuephongtro.body,
+    code: "CTPT",
+  },
+  {
+    body: chothuematbang.body,
+    code: "CTMB",
+  },
+  {
+    body: chothuecanho.body,
+    code: "CTCH",
+  },
+  {
+    body: nhachothue.body,
+    code: "NCT",
+  },
 ];
 
 // const prices =
@@ -30,7 +42,7 @@ export const insertService = () =>
       const provinceCodes = [];
       const labelCodes = [];
       dataBody.forEach((cate) => {
-        cate.forEach(async (item) => {
+        cate.body.forEach(async (item) => {
           let postId = v4();
           let labelCode = generateCode(item?.header?.class?.classType).trim();
           labelCodes?.every((item) => item?.code !== labelCode) &&
@@ -64,7 +76,7 @@ export const insertService = () =>
             labelCode,
             address: item?.header?.address,
             attributesId,
-            categoryCode: "NCT",
+            categoryCode: cate.code,
             description: JSON.stringify(item?.mainContent?.content),
             userId,
             overviewId,
