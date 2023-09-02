@@ -1,18 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { text } from "../../Ultils/constant";
 import { Province, ItemSidebar, RelatePost } from "../../Component";
 import { List, Pagination } from "./index";
-import { useSelector, useDispatch } from "react-redux";
-import * as actions from "../../Store/actions";
+import { useSelector } from "react-redux";
 
 const HomePage = () => {
   const { categories, prices, areas } = useSelector((state) => state.app);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(actions.getPrices());
-    dispatch(actions.getAreas());
-  }, []);
 
   return (
     <div className=" w-full flex flex-col gap-3">
