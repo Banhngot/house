@@ -17,7 +17,7 @@ const List = ({ categoryCode }) => {
     }
     let searchParamsObj = {};
     params?.map((i) => {
-      searchParamsObj = { ...searchParamsObj, [i[0]]: [1] };
+      searchParamsObj = { ...searchParamsObj, [i[0]]: [i[1]] };
     });
     if (categoryCode) searchParamsObj.categoryCode = categoryCode;
     dispatch(getPostsLimit(searchParamsObj));
