@@ -4,8 +4,8 @@ import icons from "../Ultils/icons";
 const { GrLinkPrevious } = icons;
 
 const Modal = ({ setIsShowMadal, content, name }) => {
-  const [persent1, setPersent1] = useState(-1);
-  const [persent2, setPersent2] = useState(101);
+  const [persent1, setPersent1] = useState(0);
+  const [persent2, setPersent2] = useState(100);
 
   useEffect(() => {
     const activedTrackEl = document.getElementById("track-active");
@@ -17,6 +17,20 @@ const Modal = ({ setIsShowMadal, content, name }) => {
       activedTrackEl.style.right = `${100 - persent2}%`;
     }
   }, [persent1, persent2]);
+
+  const handleClickStack = (e) => {
+    e.stopPropagation();
+    const stackEl = document.getElementById("track");
+    const stackRect = stackEl.getBoundingClientRect();
+    let persent = Math.round(
+      ((e.clientX - stackRect.left) * 100) / stackRect.width
+    );
+    if (Math.abs(persent - persent1) <= Math.abs(persent - persent2)) {
+      setPersent1(persent);
+    } else {
+      setPersent2(persent);
+    }
+  };
 
   return (
     <div
@@ -66,8 +80,13 @@ const Modal = ({ setIsShowMadal, content, name }) => {
         {(name === "price" || name === "area") && (
           <div className="p-12">
             <div className="flex flex-col items-center justify-center relative">
-              <div className="slider-track h-[5px] absolute top-0 bottom-0 w-full bg-gray-300 rounded-full"></div>
               <div
+                id="track"
+                onClick={handleClickStack}
+                className="slider-track h-[5px] absolute top-0 bottom-0 w-full bg-gray-300 rounded-full"
+              ></div>
+              <div
+                onClick={handleClickStack}
                 id="track-active"
                 className="slider-track-active h-[5px] absolute top-0 bottom-0  bg-orange-600 rounded-full"
               ></div>
