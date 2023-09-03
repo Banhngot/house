@@ -5,6 +5,7 @@ const initState = {
   categories: [],
   prices: [],
   areas: [],
+  provinces: [],
 };
 
 const appReducer = (state = initState, action) => {
@@ -25,6 +26,12 @@ const appReducer = (state = initState, action) => {
       return {
         ...state,
         areas: action.areas || [],
+        mgs: action.mgs || "",
+      };
+    case actionTypes.GET_PROVINCE:
+      return {
+        ...state,
+        provinces: action.provinces || [],
         mgs: action.mgs || "",
       };
 
