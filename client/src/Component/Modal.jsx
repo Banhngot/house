@@ -6,6 +6,7 @@ const { GrLinkPrevious } = icons;
 const Modal = ({ setIsShowMadal, content, name }) => {
   const [persent1, setPersent1] = useState(0);
   const [persent2, setPersent2] = useState(100);
+  const [activedEl, setActivedEl] = useState("");
 
   useEffect(() => {
     const activedTrackEl = document.getElementById("track-active");
@@ -18,13 +19,13 @@ const Modal = ({ setIsShowMadal, content, name }) => {
     }
   }, [persent1, persent2]);
 
-  const handleClickStack = (e) => {
+  const handleClickTrack = (e, value) => {
     e.stopPropagation();
     const stackEl = document.getElementById("track");
     const stackRect = stackEl.getBoundingClientRect();
-    let persent = Math.round(
-      ((e.clientX - stackRect.left) * 100) / stackRect.width
-    );
+    let persent = value
+      ? value
+      : Math.round(((e.clientX - stackRect.left) * 100) / stackRect.width, 0);
     if (Math.abs(persent - persent1) <= Math.abs(persent - persent2)) {
       setPersent1(persent);
     } else {
@@ -37,6 +38,44 @@ const Modal = ({ setIsShowMadal, content, name }) => {
     // 11% => 1.65 * 10 = 17 / 5 = 3 du 2 => 4 * 5 = 20 / 10 = 2
 
     return (Math.ceil(Math.round(percent * 1.5) / 5) * 5) / 10;
+  };
+  const convert15to100 = (percent) => {
+    // 10% => 1.5
+    // 9% => 1.35 * 10 = 14 / 5 = 2 du 4 => 3 * 5 = 15 /10 = 1.5
+    // 11% => 1.65 * 10 = 17 / 5 = 3 du 2 => 4 * 5 = 20 / 10 = 2
+
+    return Math.floor((percent / 15) * 100);
+  };
+  const getNumbers = (string) =>
+    string
+      .split(" ")
+      .map((item) => +item)
+      .filter((item) => !item === false);
+
+  const handlePrice = (code, value) => {
+    setActivedEl(code);
+    let arrMaxMin = getNumbers(value);
+
+    if (arrMaxMin.length === 1) {
+      if (arrMaxMin[0] === 1) {
+        setPersent1(0);
+        setPersent2(convert15to100(1));
+      }
+      if (arrMaxMin[0] === 15) {
+        setPersent1(100);
+        setPersent2(100);
+      }
+    }
+
+    if (arrMaxMin.length === 2) {
+      setPersent1(convert15to100(arrMaxMin[0]));
+      setPersent2(convert15to100(arrMaxMin[1]));
+    }
+  };
+
+  const handleSubmit = () => {
+    console.log("start", convert100to15(persent1));
+    console.log("end", convert100to15(persent2));
   };
 
   return (
@@ -51,7 +90,7 @@ const Modal = ({ setIsShowMadal, content, name }) => {
           e.stopPropagation();
           setIsShowMadal(true);
         }}
-        className="w-1/3 bg-white rounded-md"
+        className="w-2/5 bg-white rounded-md"
       >
         <div className="h-[45px] px-4 flex items-center border border-gray-200">
           <span
@@ -100,11 +139,11 @@ const Modal = ({ setIsShowMadal, content, name }) => {
               </div>
               <div
                 id="track"
-                onClick={handleClickStack}
+                onClick={handleClickTrack}
                 className="slider-track h-[5px] absolute top-0 bottom-0 w-full bg-gray-300 rounded-full"
               ></div>
               <div
-                onClick={handleClickStack}
+                onClick={handleClickTrack}
                 id="track-active"
                 className="slider-track-active h-[5px] absolute top-0 bottom-0  bg-orange-600 rounded-full"
               ></div>
@@ -115,7 +154,10 @@ const Modal = ({ setIsShowMadal, content, name }) => {
                 type="range"
                 value={persent1}
                 className="w-full appearance-none pointer-events-none absolute top-0 bottom-0"
-                onChange={(e) => setPersent1(+e.target.value)}
+                onChange={(e) => {
+                  setPersent1(+e.target.value);
+                  activedEl && setActivedEl("");
+                }}
               />
               <input
                 max="100"
@@ -124,15 +166,59 @@ const Modal = ({ setIsShowMadal, content, name }) => {
                 type="range"
                 value={persent2}
                 className="w-full appearance-none pointer-events-none absolute top-0 bottom-0"
-                onChange={(e) => setPersent2(+e.target.value)}
+                onChange={(e) => {
+                  setPersent2(+e.target.value);
+                  activedEl && setActivedEl("");
+                }}
               />
               <div className="absolute z-30 top-6 left-0 right-0 flex justify-between items-center ">
-                <span className="">0</span>
-                <span className="mr-[-12px]">15 triệu +</span>
+                <span
+                  className="cursor-pointer"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleClickTrack(e, 0);
+                  }}
+                >
+                  0
+                </span>
+                <span
+                  className="mr-[-12px] cursor-pointer"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleClickTrack(e, 100);
+                  }}
+                >
+                  15 triệu +
+                </span>
+              </div>
+            </div>
+            <div className=" mt-24">
+              <h4 className="font-medium mb-4">Chọn nhanh :</h4>
+              <div className="flex gap-2  items-center flex-wrap w-full">
+                {content?.map((item) => {
+                  return (
+                    <button
+                      key={item.code}
+                      onClick={() => handlePrice(item.code, item.value)}
+                      className={`px-4 py-2 bg-gray-200 rounded-md cursor-pointer ${
+                        item.code === activedEl ? "bg-yellow-300 " : ""
+                      }`}
+                    >
+                      {item.value}
+                    </button>
+                  );
+                })}
               </div>
             </div>
           </div>
         )}
+        <button
+          type="button"
+          className="w-full bg-orange-500 py-2 font-medium rounded-bl-md rounded-br-md"
+          onClick={handleSubmit}
+        >
+          Xác nhận
+        </button>
       </div>
     </div>
   );
