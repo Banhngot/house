@@ -33,8 +33,13 @@ export const prices = [
   },
   {
     min: 10,
+    max: 15,
+    value: "Từ 10 - 15 triệu",
+  },
+  {
+    min: 15,
     max: 99999,
-    value: "Trên 10 triệu",
+    value: "Trên 15 triệu",
   },
 ];
 
