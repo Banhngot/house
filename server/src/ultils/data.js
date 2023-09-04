@@ -66,13 +66,13 @@ const areas = [
   },
   {
     min: 70,
-    max: 100,
-    value: "Từ 70m - 100m",
+    max: 90,
+    value: "Từ 70m - 90m",
   },
   {
-    min: 100,
+    min: 90,
     max: 99999,
-    value: "Trên 100m",
+    value: "Trên 90m",
   },
 ];
 

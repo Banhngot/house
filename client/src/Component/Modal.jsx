@@ -10,12 +10,14 @@ const Modal = ({ setIsShowMadal, content, name }) => {
 
   useEffect(() => {
     const activedTrackEl = document.getElementById("track-active");
-    if (persent2 <= persent1) {
-      activedTrackEl.style.left = `${persent2}%`;
-      activedTrackEl.style.right = `${100 - persent1}%`;
-    } else {
-      activedTrackEl.style.left = `${persent1}%`;
-      activedTrackEl.style.right = `${100 - persent2}%`;
+    if (activedTrackEl) {
+      if (persent2 <= persent1) {
+        activedTrackEl.style.left = `${persent2}%`;
+        activedTrackEl.style.right = `${100 - persent1}%`;
+      } else {
+        activedTrackEl.style.left = `${persent1}%`;
+        activedTrackEl.style.right = `${100 - persent2}%`;
+      }
     }
   }, [persent1, persent2]);
 
@@ -32,19 +34,22 @@ const Modal = ({ setIsShowMadal, content, name }) => {
       setPersent2(persent);
     }
   };
-  const convert100to15 = (percent) => {
+  const convert100toTarget = (percent) => {
     // 10% => 1.5
     // 9% => 1.35 * 10 = 14 / 5 = 2 du 4 => 3 * 5 = 15 /10 = 1.5
     // 11% => 1.65 * 10 = 17 / 5 = 3 du 2 => 4 * 5 = 20 / 10 = 2
-
-    return (Math.ceil(Math.round(percent * 1.5) / 5) * 5) / 10;
+    return name === "price"
+      ? (Math.ceil(Math.round(percent * 1.5) / 5) * 5) / 10
+      : name === "area"
+      ? Math.ceil(Math.round(percent * 0.9) / 5) * 5
+      : 0;
   };
   const convert15to100 = (percent) => {
     // 10% => 1.5
     // 9% => 1.35 * 10 = 14 / 5 = 2 du 4 => 3 * 5 = 15 /10 = 1.5
     // 11% => 1.65 * 10 = 17 / 5 = 3 du 2 => 4 * 5 = 20 / 10 = 2
-
-    return Math.floor((percent / 15) * 100);
+    let target = name === "price" ? 15 : name === "area" ? 90 : 1;
+    return Math.floor((percent / target) * 100);
   };
   const getNumbers = (string) =>
     string
@@ -52,16 +57,29 @@ const Modal = ({ setIsShowMadal, content, name }) => {
       .map((item) => +item)
       .filter((item) => !item === false);
 
-  const handlePrice = (code, value) => {
-    setActivedEl(code);
-    let arrMaxMin = getNumbers(value);
+  const getNumbersArea = (string) =>
+    string
+      .split(" ")
+      .map((item) => +item.match(/\d+/))
+      .filter((item) => item !== 0);
 
+  console.log(getNumbersArea("tu 20m - 30m"));
+
+  const handleActive = (code, value) => {
+    setActivedEl(code);
+    let arrMaxMin =
+      name === "price" ? getNumbers(value) : getNumbersArea(value);
+    console.log(arrMaxMin);
     if (arrMaxMin.length === 1) {
       if (arrMaxMin[0] === 1) {
         setPersent1(0);
         setPersent2(convert15to100(1));
       }
-      if (arrMaxMin[0] === 15) {
+      if (arrMaxMin[0] === 20) {
+        setPersent1(0);
+        setPersent2(convert15to100(20));
+      }
+      if (arrMaxMin[0] === 15 || arrMaxMin[0] === 90) {
         setPersent1(100);
         setPersent2(100);
       }
@@ -74,8 +92,8 @@ const Modal = ({ setIsShowMadal, content, name }) => {
   };
 
   const handleSubmit = () => {
-    console.log("start", convert100to15(persent1));
-    console.log("end", convert100to15(persent2));
+    console.log("start", convert100toTarget(persent1));
+    console.log("end", convert100toTarget(persent2));
   };
 
   return (
@@ -129,13 +147,13 @@ const Modal = ({ setIsShowMadal, content, name }) => {
               <div className="z-30 absolute top-[-48px] font-bold text-xl text-orange-600">
                 {`Từ ${
                   persent1 <= persent2
-                    ? convert100to15(persent1)
-                    : convert100to15(persent2)
+                    ? convert100toTarget(persent1)
+                    : convert100toTarget(persent2)
                 } - ${
                   persent2 >= persent1
-                    ? convert100to15(persent2)
-                    : convert100to15(persent1)
-                } triệu `}
+                    ? convert100toTarget(persent2)
+                    : convert100toTarget(persent1)
+                } ${name === "price" ? "triệu" : "m2"}`}
               </div>
               <div
                 id="track"
@@ -188,7 +206,11 @@ const Modal = ({ setIsShowMadal, content, name }) => {
                     handleClickTrack(e, 100);
                   }}
                 >
-                  15 triệu +
+                  {name === "price"
+                    ? "15 triệu +"
+                    : name === "area"
+                    ? "Trên 90m2"
+                    : ""}
                 </span>
               </div>
             </div>
@@ -199,7 +221,7 @@ const Modal = ({ setIsShowMadal, content, name }) => {
                   return (
                     <button
                       key={item.code}
-                      onClick={() => handlePrice(item.code, item.value)}
+                      onClick={() => handleActive(item.code, item.value)}
                       className={`px-4 py-2 bg-gray-200 rounded-md cursor-pointer ${
                         item.code === activedEl ? "bg-yellow-300 " : ""
                       }`}
@@ -212,13 +234,15 @@ const Modal = ({ setIsShowMadal, content, name }) => {
             </div>
           </div>
         )}
-        <button
-          type="button"
-          className="w-full bg-orange-500 py-2 font-medium rounded-bl-md rounded-br-md"
-          onClick={handleSubmit}
-        >
-          Xác nhận
-        </button>
+        {(name === "price" || name === "area") && (
+          <button
+            type="button"
+            className="w-full bg-orange-500 py-2 font-medium rounded-bl-md rounded-br-md capitalize"
+            onClick={handleSubmit}
+          >
+            Xác nhận
+          </button>
+        )}
       </div>
     </div>
   );
