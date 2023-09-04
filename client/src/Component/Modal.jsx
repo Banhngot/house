@@ -31,6 +31,13 @@ const Modal = ({ setIsShowMadal, content, name }) => {
       setPersent2(persent);
     }
   };
+  const convert100to15 = (percent) => {
+    // 10% => 1.5
+    // 9% => 1.35 * 10 = 14 / 5 = 2 du 4 => 3 * 5 = 15 /10 = 1.5
+    // 11% => 1.65 * 10 = 17 / 5 = 3 du 2 => 4 * 5 = 20 / 10 = 2
+
+    return (Math.ceil(Math.round(percent * 1.5) / 5) * 5) / 10;
+  };
 
   return (
     <div
@@ -78,8 +85,19 @@ const Modal = ({ setIsShowMadal, content, name }) => {
           </div>
         )}
         {(name === "price" || name === "area") && (
-          <div className="p-12">
+          <div className="p-12 py-20">
             <div className="flex flex-col items-center justify-center relative">
+              <div className="z-30 absolute top-[-48px] font-bold text-xl text-orange-600">
+                {`Từ ${
+                  persent1 <= persent2
+                    ? convert100to15(persent1)
+                    : convert100to15(persent2)
+                } - ${
+                  persent2 >= persent1
+                    ? convert100to15(persent2)
+                    : convert100to15(persent1)
+                } triệu `}
+              </div>
               <div
                 id="track"
                 onClick={handleClickStack}
@@ -93,7 +111,7 @@ const Modal = ({ setIsShowMadal, content, name }) => {
               <input
                 max="100"
                 min="0"
-                step="5"
+                step="1"
                 type="range"
                 value={persent1}
                 className="w-full appearance-none pointer-events-none absolute top-0 bottom-0"
@@ -102,12 +120,16 @@ const Modal = ({ setIsShowMadal, content, name }) => {
               <input
                 max="100"
                 min="0"
-                step="5"
+                step="1"
                 type="range"
                 value={persent2}
                 className="w-full appearance-none pointer-events-none absolute top-0 bottom-0"
                 onChange={(e) => setPersent2(+e.target.value)}
               />
+              <div className="absolute z-30 top-6 left-0 right-0 flex justify-between items-center ">
+                <span className="">0</span>
+                <span className="mr-[-12px]">10 triệu +</span>
+              </div>
             </div>
           </div>
         )}
