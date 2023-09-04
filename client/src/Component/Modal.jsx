@@ -128,7 +128,7 @@ const Modal = ({ setIsShowMadal, content, name }) => {
               />
               <div className="absolute z-30 top-6 left-0 right-0 flex justify-between items-center ">
                 <span className="">0</span>
-                <span className="mr-[-12px]">10 triệu +</span>
+                <span className="mr-[-12px]">15 triệu +</span>
               </div>
             </div>
           </div>
