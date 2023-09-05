@@ -3,7 +3,7 @@ import icons from "../Ultils/icons";
 
 const { GrLinkPrevious } = icons;
 
-const Modal = ({ setIsShowMadal, content, name }) => {
+const Modal = ({ setIsShowMadal, content, name, handleSubmit, queries }) => {
   const [persent1, setPersent1] = useState(0);
   const [persent2, setPersent2] = useState(100);
   const [activedEl, setActivedEl] = useState("");
@@ -44,7 +44,7 @@ const Modal = ({ setIsShowMadal, content, name }) => {
       ? Math.ceil(Math.round(percent * 0.9) / 5) * 5
       : 0;
   };
-  const convert15to100 = (percent) => {
+  const convertto100 = (percent) => {
     // 10% => 1.5
     // 9% => 1.35 * 10 = 14 / 5 = 2 du 4 => 3 * 5 = 15 /10 = 1.5
     // 11% => 1.65 * 10 = 17 / 5 = 3 du 2 => 4 * 5 = 20 / 10 = 2
@@ -63,8 +63,6 @@ const Modal = ({ setIsShowMadal, content, name }) => {
       .map((item) => +item.match(/\d+/))
       .filter((item) => item !== 0);
 
-  console.log(getNumbersArea("tu 20m - 30m"));
-
   const handleActive = (code, value) => {
     setActivedEl(code);
     let arrMaxMin =
@@ -73,11 +71,11 @@ const Modal = ({ setIsShowMadal, content, name }) => {
     if (arrMaxMin.length === 1) {
       if (arrMaxMin[0] === 1) {
         setPersent1(0);
-        setPersent2(convert15to100(1));
+        setPersent2(convertto100(1));
       }
       if (arrMaxMin[0] === 20) {
         setPersent1(0);
-        setPersent2(convert15to100(20));
+        setPersent2(convertto100(20));
       }
       if (arrMaxMin[0] === 15 || arrMaxMin[0] === 90) {
         setPersent1(100);
@@ -86,14 +84,9 @@ const Modal = ({ setIsShowMadal, content, name }) => {
     }
 
     if (arrMaxMin.length === 2) {
-      setPersent1(convert15to100(arrMaxMin[0]));
-      setPersent2(convert15to100(arrMaxMin[1]));
+      setPersent1(convertto100(arrMaxMin[0]));
+      setPersent2(convertto100(arrMaxMin[1]));
     }
-  };
-
-  const handleSubmit = () => {
-    console.log("start", convert100toTarget(persent1));
-    console.log("end", convert100toTarget(persent2));
   };
 
   return (
@@ -134,6 +127,15 @@ const Modal = ({ setIsShowMadal, content, name }) => {
                     name={name}
                     id={item.code}
                     value={item.code}
+                    checked={
+                      item.code === queries[`${name}Code`] ? true : false
+                    }
+                    onClick={(e) =>
+                      handleSubmit(e, {
+                        [name]: item.value,
+                        [`${name}Code`]: item.code,
+                      })
+                    }
                   />
                   <label htmlFor={item.code}>{item.value}</label>
                 </span>
@@ -145,15 +147,19 @@ const Modal = ({ setIsShowMadal, content, name }) => {
           <div className="p-12 py-20">
             <div className="flex flex-col items-center justify-center relative">
               <div className="z-30 absolute top-[-48px] font-bold text-xl text-orange-600">
-                {`Từ ${
-                  persent1 <= persent2
-                    ? convert100toTarget(persent1)
-                    : convert100toTarget(persent2)
-                } - ${
-                  persent2 >= persent1
-                    ? convert100toTarget(persent2)
-                    : convert100toTarget(persent1)
-                } ${name === "price" ? "triệu" : "m2"}`}
+                {persent1 === 100 && persent2 === 100
+                  ? `Trên ${convert100toTarget(persent1)} ${
+                      name === "price" ? "triệu" : "m2"
+                    }`
+                  : `Từ ${
+                      persent1 <= persent2
+                        ? convert100toTarget(persent1)
+                        : convert100toTarget(persent2)
+                    } - ${
+                      persent2 >= persent1
+                        ? convert100toTarget(persent2)
+                        : convert100toTarget(persent1)
+                    } ${name === "price" ? "triệu" : "m2"}`}
               </div>
               <div
                 id="track"
@@ -238,7 +244,7 @@ const Modal = ({ setIsShowMadal, content, name }) => {
           <button
             type="button"
             className="w-full bg-orange-500 py-2 font-medium rounded-bl-md rounded-br-md capitalize"
-            onClick={handleSubmit}
+            // onClick={handleSubmit}
           >
             Xác nhận
           </button>

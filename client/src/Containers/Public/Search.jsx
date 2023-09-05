@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { SearchItem, Modal } from "../../Component";
 import icons from "../../Ultils/icons";
 import { useSelector } from "react-redux";
@@ -18,12 +18,23 @@ const Search = () => {
   const { provinces, areas, prices, categories } = useSelector(
     (state) => state.app
   );
+  const [queries, setQueries] = useState({});
 
   const handleShowMadal = (content, name) => {
     setIsShowMadal(true);
     setName(name);
     setContent(content);
   };
+
+  const handleSubmit = useCallback(
+    (e, query) => {
+      e.stopPropagation();
+      setQueries((prev) => ({ ...prev, ...query }));
+      setIsShowMadal(false);
+    },
+    [isShowModal, queries]
+  );
+  console.log(queries);
 
   return (
     <>
@@ -35,7 +46,8 @@ const Search = () => {
           <SearchItem
             IconBefore={<BsFillHouseHeartFill />}
             fontWeigh
-            text="Phòng trọ, nhà trọ"
+            text={queries.category}
+            defaultText={"Phòng trọ, nhà trọ"}
           />
         </span>
         <span
@@ -45,7 +57,8 @@ const Search = () => {
           <SearchItem
             IconBefore={<BiLocationPlus />}
             IconAfter={<GrFormNext />}
-            text="Địa điểm"
+            text={queries.province}
+            defaultText={"Địa điểm"}
           />
         </span>
         <span
@@ -55,7 +68,8 @@ const Search = () => {
           <SearchItem
             IconBefore={<BiMoney />}
             IconAfter={<GrFormNext />}
-            text="Giá "
+            text={queries.price}
+            defaultText={"Giá "}
           />
         </span>
         <span
@@ -65,7 +79,8 @@ const Search = () => {
           <SearchItem
             IconBefore={<BiArea />}
             IconAfter={<GrFormNext />}
-            text="Diện tích"
+            text={queries.area}
+            defaultText={"Diện tích"}
           />
         </span>
         <button
@@ -77,7 +92,13 @@ const Search = () => {
         </button>
       </div>
       {isShowModal && (
-        <Modal content={content} name={name} setIsShowMadal={setIsShowMadal} />
+        <Modal
+          handleSubmit={handleSubmit}
+          queries={queries}
+          content={content}
+          name={name}
+          setIsShowMadal={setIsShowMadal}
+        />
       )}
     </>
   );
