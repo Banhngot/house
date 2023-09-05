@@ -2,7 +2,7 @@ import React, { useCallback, useState } from "react";
 import { SearchItem, Modal } from "../../Component";
 import icons from "../../Ultils/icons";
 import { useSelector } from "react-redux";
-import { getCodePrice, getCodeArea } from "../../Ultils/Common/getCodes";
+import { getCodesArea } from "../../Ultils/Common/getCodes";
 
 const {
   GrFormNext,
@@ -20,6 +20,7 @@ const Search = () => {
     (state) => state.app
   );
   const [queries, setQueries] = useState({});
+  const [arrMinMax, setArrMinMax] = useState({});
 
   const handleShowMadal = (content, name) => {
     setIsShowMadal(true);
@@ -28,14 +29,15 @@ const Search = () => {
   };
 
   const handleSubmit = useCallback(
-    (e, query) => {
+    (e, query, arrMaxMin) => {
       e.stopPropagation();
       setQueries((prev) => ({ ...prev, ...query }));
       setIsShowMadal(false);
+      arrMaxMin && setArrMinMax((prev) => ({ ...prev, ...arrMaxMin }));
     },
     [isShowModal, queries]
   );
-  // console.log(queries);
+  console.log(queries);
 
   return (
     <>
@@ -97,6 +99,7 @@ const Search = () => {
           handleSubmit={handleSubmit}
           queries={queries}
           content={content}
+          arrMinMax={arrMinMax}
           name={name}
           setIsShowMadal={setIsShowMadal}
         />

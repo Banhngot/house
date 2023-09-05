@@ -1,12 +1,33 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, memo } from "react";
 import icons from "../Ultils/icons";
 import { getNumbersPrice, getNumbersArea } from "../Ultils/Common/getNumbers";
+import { getCodes, getCodesArea } from "../Ultils/Common/getCodes";
 
 const { GrLinkPrevious } = icons;
 
-const Modal = ({ setIsShowMadal, content, name, handleSubmit, queries }) => {
-  const [persent1, setPersent1] = useState(0);
-  const [persent2, setPersent2] = useState(100);
+const Modal = ({
+  setIsShowMadal,
+  content,
+  name,
+  handleSubmit,
+  queries,
+  arrMinMax,
+}) => {
+  console.log(arrMinMax);
+  const [persent1, setPersent1] = useState(
+    name === "price" && arrMinMax?.priceArr
+      ? arrMinMax?.priceArr[0]
+      : name === "area" && arrMinMax?.areaArr
+      ? arrMinMax?.areaArr[0]
+      : 0
+  );
+  const [persent2, setPersent2] = useState(
+    name === "price" && arrMinMax?.priceArr
+      ? arrMinMax?.priceArr[1]
+      : name === "area" && arrMinMax?.areaArr
+      ? arrMinMax?.areaArr[1]
+      : 100
+  );
   const [activedEl, setActivedEl] = useState("");
 
   useEffect(() => {
@@ -57,7 +78,7 @@ const Modal = ({ setIsShowMadal, content, name, handleSubmit, queries }) => {
     setActivedEl(code);
     let arrMaxMin =
       name === "price" ? getNumbersPrice(value) : getNumbersArea(value);
-    console.log(arrMaxMin);
+
     if (arrMaxMin.length === 1) {
       if (arrMaxMin[0] === 1) {
         setPersent1(0);
@@ -77,6 +98,31 @@ const Modal = ({ setIsShowMadal, content, name, handleSubmit, queries }) => {
       setPersent1(convertto100(arrMaxMin[0]));
       setPersent2(convertto100(arrMaxMin[1]));
     }
+  };
+
+  const handleBeforSubmit = (e) => {
+    const gaps =
+      name === "price"
+        ? getCodes(
+            [convert100toTarget(persent1), convert100toTarget(persent2)],
+            content
+          )
+        : name === "area"
+        ? getCodesArea(
+            [convert100toTarget(persent1), convert100toTarget(persent2)],
+            content
+          )
+        : [];
+    handleSubmit(
+      e,
+      {
+        [`${name}Code`]: gaps?.map((item) => item.code),
+        [name]: `Từ ${convert100toTarget(persent1)} - ${convert100toTarget(
+          persent2
+        )} ${name === "price" ? "triệu" : "m2"}`,
+      },
+      { [`${name}Arr`]: [persent1, persent2] }
+    );
   };
 
   return (
@@ -234,7 +280,7 @@ const Modal = ({ setIsShowMadal, content, name, handleSubmit, queries }) => {
           <button
             type="button"
             className="w-full bg-orange-500 py-2 font-medium rounded-bl-md rounded-br-md capitalize"
-            // onClick={handleSubmit}
+            onClick={handleBeforSubmit}
           >
             Xác nhận
           </button>
@@ -244,4 +290,4 @@ const Modal = ({ setIsShowMadal, content, name, handleSubmit, queries }) => {
   );
 };
 
-export default Modal;
+export default memo(Modal);
