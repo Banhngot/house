@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import icons from "../Ultils/icons";
+import { getNumbersPrice, getNumbersArea } from "../Ultils/Common/getNumbers";
 
 const { GrLinkPrevious } = icons;
 
@@ -51,22 +52,11 @@ const Modal = ({ setIsShowMadal, content, name, handleSubmit, queries }) => {
     let target = name === "price" ? 15 : name === "area" ? 90 : 1;
     return Math.floor((percent / target) * 100);
   };
-  const getNumbers = (string) =>
-    string
-      .split(" ")
-      .map((item) => +item)
-      .filter((item) => !item === false);
-
-  const getNumbersArea = (string) =>
-    string
-      .split(" ")
-      .map((item) => +item.match(/\d+/))
-      .filter((item) => item !== 0);
 
   const handleActive = (code, value) => {
     setActivedEl(code);
     let arrMaxMin =
-      name === "price" ? getNumbers(value) : getNumbersArea(value);
+      name === "price" ? getNumbersPrice(value) : getNumbersArea(value);
     console.log(arrMaxMin);
     if (arrMaxMin.length === 1) {
       if (arrMaxMin[0] === 1) {

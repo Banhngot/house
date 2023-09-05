@@ -2,6 +2,7 @@ import React, { useCallback, useState } from "react";
 import { SearchItem, Modal } from "../../Component";
 import icons from "../../Ultils/icons";
 import { useSelector } from "react-redux";
+import { getCodePrice, getCodeArea } from "../../Ultils/Common/getCodes";
 
 const {
   GrFormNext,
@@ -34,7 +35,7 @@ const Search = () => {
     },
     [isShowModal, queries]
   );
-  console.log(queries);
+  // console.log(queries);
 
   return (
     <>
