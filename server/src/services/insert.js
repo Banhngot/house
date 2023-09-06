@@ -8,7 +8,7 @@ import chothuephongtro from "../../data/chothuephongtro.json";
 import nhachothue from "../../data/nhachothue.json";
 import generateCode from "../ultils/generateCode";
 import { dataPrice, dataArea } from "../ultils/data";
-import { getNumberFromString } from "../ultils/common";
+import { getNumberFromString, getNumberFromStringV2 } from "../ultils/common";
 
 require("dotenv").config();
 
@@ -88,8 +88,10 @@ export const insertService = () =>
               (area) => area.max > currentPrice && area.min <= currentPrice
             )?.code,
             provinceCode,
-            priceNumber: +currentPrice,
-            areaNumber: +currentArea,
+            priceNumber: getNumberFromStringV2(item?.header?.attributes?.price),
+            areaNumber: getNumberFromStringV2(
+              item?.header?.attributes?.acreage
+            ),
           });
 
           await db.Attribute.create({
