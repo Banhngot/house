@@ -1,5 +1,7 @@
 import db from "../models";
 
+const { Op } = require("sequelize");
+
 // Get all post
 export const getPostService = () =>
   new Promise(async (resolve, reject) => {
@@ -28,13 +30,17 @@ export const getPostService = () =>
     }
   });
 // phan trang
-export const getPostLimitService = (page, query) =>
+export const getPostLimitService = (page, query, { priceNumber, areaNumber }) =>
   new Promise(async (resolve, reject) => {
     try {
       let offset = !page || +page <= 1 ? 0 : +page - 1;
-
+      const queries = {
+        ...query,
+      };
+      if (priceNumber) queries.priceNumber = { [Op.between]: priceNumber };
+      if (areaNumber) queries.areaNumber = { [Op.between]: areaNumber };
       const response = await db.Post.findAndCountAll({
-        where: query,
+        where: queries,
         raw: true,
         nest: true,
         offset: offset * +process.env.LIMIT,
@@ -58,6 +64,7 @@ export const getPostLimitService = (page, query) =>
     } catch (error) {
       reject(error);
     }
+    console.log({ priceNumber, areaNumber });
   });
 // loc theo ngay thang
 export const getNewPostService = () =>
