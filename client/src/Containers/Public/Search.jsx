@@ -1,8 +1,10 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { SearchItem, Modal } from "../../Component";
 import icons from "../../Ultils/icons";
-import { useSelector, useDispatch } from "react-redux";
-import * as actions from "../../Store/actions";
+import { useSelector } from "react-redux";
+
+import { useNavigate, createSearchParams, useLocation } from "react-router-dom";
+import { path } from "../../Ultils/constant";
 
 const {
   GrFormNext,
@@ -13,7 +15,6 @@ const {
   BsSearchHeart,
 } = icons;
 const Search = () => {
-  const dispatch = useDispatch();
   const [isShowModal, setIsShowMadal] = useState(false);
   const [content, setContent] = useState([]);
   const [name, setName] = useState("");
@@ -23,6 +24,15 @@ const Search = () => {
   const [queries, setQueries] = useState({});
   const [arrMinMax, setArrMinMax] = useState({});
   const [defaultText, setDefaultText] = useState("");
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (!location.pathname.includes(path.SEARCH)) {
+      setArrMinMax({});
+      setQueries({});
+    }
+  }, [location]);
 
   const handleShowMadal = (content, name, defaultText) => {
     setName(name);
@@ -42,15 +52,36 @@ const Search = () => {
   );
 
   const handleSearch = () => {
-    const queryCodes = Object.entries(queries).filter((item) =>
-      item[0].includes("Code")
-    );
+    const queryCodes = Object.entries(queries)
+      .filter((item) => item[0].includes("Code"))
+      .filter((item) => item[1]);
     let queryCodesObj = {};
     queryCodes.forEach((item) => {
       queryCodesObj[item[0]] = item[1];
+      const queryText = Object.entries(queries).filter(
+        (item) => !item[0].includes("Code")
+      );
+      console.log(queryText);
+      let queryTextObj = [];
+      queryText.forEach((item) => {
+        queryTextObj[item[0]] = item[1];
+      });
+      console.log(queryTextObj);
+      let titleSearch = `${
+        queryTextObj.category ? queryTextObj.category : "Cho thuê tất cả"
+      } ${queryTextObj.province ? `tỉnh ${queryTextObj.province}` : ""} ${
+        queryTextObj.price ? `giá ${queryTextObj.price}` : ""
+      } ${queryTextObj.area ? `diện tích ${queryTextObj.area}` : ""}`;
+
+      navigate(
+        {
+          pathname: path.SEARCH,
+          search: createSearchParams(queryCodesObj).toString(),
+        },
+        { state: { titleSearch } }
+      );
     });
     // console.log(queryCodesObj);
-    dispatch(actions.getPostsLimit(queryCodesObj));
   };
   return (
     <>
