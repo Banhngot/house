@@ -13,7 +13,6 @@ const Modal = ({
   queries,
   arrMinMax,
 }) => {
-  console.log(arrMinMax);
   const [persent1, setPersent1] = useState(
     name === "price" && arrMinMax?.priceArr
       ? arrMinMax?.priceArr[0]
@@ -101,27 +100,24 @@ const Modal = ({
   };
 
   const handleBeforSubmit = (e) => {
+    let min = persent1 <= persent2 ? persent1 : persent2;
+    let max = persent1 <= persent2 ? persent2 : persent1;
+    let arrMinMax = [convert100toTarget(min), convert100toTarget(max)];
     const gaps =
       name === "price"
-        ? getCodes(
-            [convert100toTarget(persent1), convert100toTarget(persent2)],
-            content
-          )
+        ? getCodes(arrMinMax, content)
         : name === "area"
-        ? getCodesArea(
-            [convert100toTarget(persent1), convert100toTarget(persent2)],
-            content
-          )
+        ? getCodesArea(arrMinMax, content)
         : [];
     handleSubmit(
       e,
       {
         [`${name}Code`]: gaps?.map((item) => item.code),
-        [name]: `Từ ${convert100toTarget(persent1)} - ${convert100toTarget(
-          persent2
-        )} ${name === "price" ? "triệu" : "m2"}`,
+        [name]: `Từ ${convert100toTarget(min)} - ${convert100toTarget(max)} ${
+          name === "price" ? "triệu" : "m2"
+        }`,
       },
-      { [`${name}Arr`]: [persent1, persent2] }
+      { [`${name}Arr`]: [min, max] }
     );
   };
 
@@ -137,7 +133,7 @@ const Modal = ({
           e.stopPropagation();
           setIsShowMadal(true);
         }}
-        className="w-2/5 bg-white rounded-md"
+        className="w-2/5 h-[500px] bg-white rounded-md relative"
       >
         <div className="h-[45px] px-4 flex items-center border border-gray-200">
           <span
@@ -279,7 +275,7 @@ const Modal = ({
         {(name === "price" || name === "area") && (
           <button
             type="button"
-            className="w-full bg-orange-500 py-2 font-medium rounded-bl-md rounded-br-md capitalize"
+            className="w-full absolute bottom-0 bg-orange-500 py-2 font-medium rounded-bl-md rounded-br-md capitalize"
             onClick={handleBeforSubmit}
           >
             Xác nhận

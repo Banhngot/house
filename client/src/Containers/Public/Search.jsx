@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from "react";
 import { SearchItem, Modal } from "../../Component";
 import icons from "../../Ultils/icons";
-import { useSelector } from "react-redux";
-import { getCodesArea } from "../../Ultils/Common/getCodes";
+import { useSelector, useDispatch } from "react-redux";
+import * as actions from "../../Store/actions";
 
 const {
   GrFormNext,
@@ -13,6 +13,7 @@ const {
   BsSearchHeart,
 } = icons;
 const Search = () => {
+  const dispatch = useDispatch();
   const [isShowModal, setIsShowMadal] = useState(false);
   const [content, setContent] = useState([]);
   const [name, setName] = useState("");
@@ -37,8 +38,18 @@ const Search = () => {
     },
     [isShowModal, queries]
   );
-  console.log(queries);
 
+  const handleSearch = () => {
+    const queryCodes = Object.entries(queries).filter((item) =>
+      item[0].includes("Code")
+    );
+    let queryCodesObj = {};
+    queryCodes.forEach((item) => {
+      queryCodesObj[item[0]] = item[1];
+    });
+    // console.log(queryCodesObj);
+    dispatch(actions.getPostsLimit(queryCodesObj));
+  };
   return (
     <>
       <div className=" p-[10px] w-[65%] my-3 bg-[#EE7621] rounded-lg flex-col lg:flex-row flex items-center justify-around gap-2">
@@ -88,6 +99,7 @@ const Search = () => {
         </span>
         <button
           type="button"
+          onClick={handleSearch}
           className="outline-none py-2 px-4  text-sm rounded-sm bg-[#FF9900] flex items-center justify-center gap-2 text-black font-medium"
         >
           <BsSearchHeart />
