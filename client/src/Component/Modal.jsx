@@ -12,6 +12,7 @@ const Modal = ({
   handleSubmit,
   queries,
   arrMinMax,
+  defaultText,
 }) => {
   const [persent1, setPersent1] = useState(
     name === "price" && arrMinMax?.priceArr
@@ -148,6 +149,22 @@ const Modal = ({
         </div>
         {(name === "category" || name === "province") && (
           <div className="p-4 flex flex-col">
+            <span className="py-2 flex gap-2 items-center border-b border-gray-200">
+              <input
+                type="radio"
+                name={name}
+                id="default"
+                value={defaultText || ""}
+                checked={!queries[`${name}Code`] ? true : false}
+                onChange={(e) =>
+                  handleSubmit(e, {
+                    [name]: defaultText,
+                    [`${name}Code`]: null,
+                  })
+                }
+              />
+              <label htmlFor="default">{defaultText}</label>
+            </span>
             {content?.map((item) => {
               return (
                 <span
@@ -162,7 +179,7 @@ const Modal = ({
                     checked={
                       item.code === queries[`${name}Code`] ? true : false
                     }
-                    onClick={(e) =>
+                    onChange={(e) =>
                       handleSubmit(e, {
                         [name]: item.value,
                         [`${name}Code`]: item.code,

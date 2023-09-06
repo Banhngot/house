@@ -22,11 +22,13 @@ const Search = () => {
   );
   const [queries, setQueries] = useState({});
   const [arrMinMax, setArrMinMax] = useState({});
+  const [defaultText, setDefaultText] = useState("");
 
-  const handleShowMadal = (content, name) => {
-    setIsShowMadal(true);
+  const handleShowMadal = (content, name, defaultText) => {
     setName(name);
     setContent(content);
+    setDefaultText(defaultText);
+    setIsShowMadal(true);
   };
 
   const handleSubmit = useCallback(
@@ -54,18 +56,20 @@ const Search = () => {
     <>
       <div className=" p-[10px] w-[65%] my-3 bg-[#EE7621] rounded-lg flex-col lg:flex-row flex items-center justify-around gap-2">
         <span
-          onClick={() => handleShowMadal(categories, "category")}
+          onClick={() =>
+            handleShowMadal(categories, "category", "Tìm kiếm tất cả")
+          }
           className="cursor-pointer flex-1"
         >
           <SearchItem
             IconBefore={<BsFillHouseHeartFill />}
             fontWeigh
             text={queries.category}
-            defaultText={"Phòng trọ, nhà trọ"}
+            defaultText={"Tìm kiếm tất cả"}
           />
         </span>
         <span
-          onClick={() => handleShowMadal(provinces, "province")}
+          onClick={() => handleShowMadal(provinces, "province", "Địa điểm")}
           className="cursor-pointer flex-1"
         >
           <SearchItem
@@ -76,7 +80,7 @@ const Search = () => {
           />
         </span>
         <span
-          onClick={() => handleShowMadal(prices, "price")}
+          onClick={() => handleShowMadal(prices, "price", "Giá ")}
           className="cursor-pointer flex-1"
         >
           <SearchItem
@@ -87,7 +91,7 @@ const Search = () => {
           />
         </span>
         <span
-          onClick={() => handleShowMadal(areas, "area")}
+          onClick={() => handleShowMadal(areas, "area", "Diện tích")}
           className="cursor-pointer flex-1"
         >
           <SearchItem
@@ -114,6 +118,7 @@ const Search = () => {
           arrMinMax={arrMinMax}
           name={name}
           setIsShowMadal={setIsShowMadal}
+          defaultText={defaultText}
         />
       )}
     </>
