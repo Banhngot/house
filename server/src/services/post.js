@@ -64,7 +64,6 @@ export const getPostLimitService = (page, query, { priceNumber, areaNumber }) =>
     } catch (error) {
       reject(error);
     }
-    console.log({ priceNumber, areaNumber });
   });
 // loc theo ngay thang
 export const getNewPostService = () =>
