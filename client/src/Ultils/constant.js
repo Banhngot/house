@@ -7,6 +7,7 @@ export const path = {
   NHA_CHO_THUE: "nha-cho-thue",
   CHO_THUE_PHONG_TR0: "cho-thue-phong-tro",
   DETAIL_POST__TITLE__POSTID: "chi-tiet/:title/:postid",
+  SEARCH: "tiem-kiem",
 };
 
 export const text = {

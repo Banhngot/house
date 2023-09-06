@@ -1,5 +1,12 @@
 import { Routes, Route } from "react-router-dom";
-import { Home, Login, Rental, HomePage, DetailPost } from "./Containers/Public";
+import {
+  Home,
+  Login,
+  Rental,
+  HomePage,
+  DetailPost,
+  SearchDetail,
+} from "./Containers/Public";
 import { path } from "./Ultils/constant";
 function App() {
   return (
@@ -13,6 +20,7 @@ function App() {
           <Route path={path.CHO_THUE_MAT_BANG} element={<Rental />} />
           <Route path={path.CHO_THUE_PHONG_TR0} element={<Rental />} />
           <Route path={path.NHA_CHO_THUE} element={<Rental />} />
+          <Route path={path.SEARCH} element={<SearchDetail />} />
           <Route
             path={path.DETAIL_POST__TITLE__POSTID}
             element={<DetailPost />}

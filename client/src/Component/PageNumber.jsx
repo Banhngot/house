@@ -22,12 +22,20 @@ const PageNumber = ({ text, currentPage, icon, setCurrentPage, type }) => {
     for (let entry of entries) {
       params.push(entry);
     }
-
-    let a = {};
-    params?.map((i) => {
-      a = { ...a, [i[0]]: i[1] };
+    let searchParamsObj = {};
+    params?.forEach((i) => {
+      if (
+        Object.keys(searchParamsObj)?.some(
+          (item) => item === i[0] && item !== "page"
+        )
+      ) {
+        searchParamsObj[i[0]] = [...searchParamsObj[i[0]], i[1]];
+      } else {
+        searchParamsObj = { ...searchParamsObj, [i[0]]: [i[1]] };
+      }
     });
-    return a;
+
+    return searchParamsObj;
   };
 
   const handleChangePage = () => {
