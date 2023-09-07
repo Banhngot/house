@@ -58,7 +58,7 @@ export const loginService = ({ phone, password }) =>
           ? "Login successfully !"
           : response
           ? "Password is wrong !"
-          : "phone number not found !",
+          : "phone number is not found !",
         token: token || null,
       });
     } catch (error) {
