@@ -1,17 +1,17 @@
 import React, { memo } from "react";
 
 const InputForm = ({
-  lable,
+  label,
   value,
   setValue,
   keyPayload,
-  invalidFiels,
-  setInvalidFiels,
+  invalidFields,
+  setInvalidFields,
   type,
 }) => {
   return (
     <div>
-      <lable htlmFor={keyPayload}>{lable}</lable>
+      <label labelfor={keyPayload}>{label}</label>
       <input
         type={type || "text"}
         id={keyPayload}
@@ -20,12 +20,12 @@ const InputForm = ({
         onChange={(e) =>
           setValue((prev) => ({ ...prev, [keyPayload]: e.target.value }))
         }
-        onFocus={() => setInvalidFiels([])}
+        onFocus={() => setInvalidFields([])}
       />
-      {invalidFiels.length > 0 &&
-        invalidFiels.some((i) => i.name === keyPayload) && (
+      {invalidFields.length > 0 &&
+        invalidFields.some((i) => i.name === keyPayload) && (
           <small className="text-red-500 italic">
-            {invalidFiels.find((i) => i.name === keyPayload)?.message}
+            {invalidFields.find((i) => i.name === keyPayload)?.message}
           </small>
         )}
     </div>
