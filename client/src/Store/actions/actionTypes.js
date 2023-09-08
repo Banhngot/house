@@ -12,6 +12,8 @@ const actionTypes = {
   GET_PRICE: "GET_PRICE",
   GET_AREA: "GET_AREA",
   GET_PROVINCE: "GET_PROVINCE",
+  //USER
+  GET_CURRENT: "GET_CURRENT",
 };
 
 export default actionTypes;

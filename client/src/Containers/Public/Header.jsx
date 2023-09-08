@@ -11,6 +11,7 @@ const { AiOutlinePlusCircle } = icons;
 const Header = () => {
   const navigate = useNavigate();
   const { isLoggedIn } = useSelector((state) => state.auth);
+  const { currentData } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
   const headerRef = useRef();
@@ -52,7 +53,7 @@ const Header = () => {
           )}
           {isLoggedIn && (
             <div className="flex items-center gap-1">
-              <small>Name !</small>
+              <small>{currentData.name}</small>
               <Button
                 text={"Logout"}
                 textColor="text-black"

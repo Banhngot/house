@@ -5,25 +5,22 @@ import { Navigation, Search } from "./index";
 import { Intro, Contact } from "../../Component";
 import * as actions from "../../Store/actions";
 import { useDispatch, useSelector } from "react-redux";
-import { apiGetCurrent } from "../../Service/user";
 
 const Home = () => {
   const dispatch = useDispatch();
   const { isLoggedIn } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    const fetchCurrent = async () => {
-      const response = await apiGetCurrent();
-      console.log(response);
-    };
-    isLoggedIn && fetchCurrent();
-  }, [isLoggedIn]);
-
-  useEffect(() => {
     dispatch(actions.getPrices());
     dispatch(actions.getAreas());
     dispatch(actions.getProvinces());
   }, []);
+  useEffect(() => {
+    setTimeout(() => {
+      isLoggedIn && dispatch(actions.getCurrent());
+    }, 100);
+  }, [isLoggedIn]);
+
   return (
     <div className="w-full flex gap-6 flex-col items-center h-ful">
       <Header />
