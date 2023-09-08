@@ -11,6 +11,11 @@ import { AiOutlineHeart } from "react-icons/ai";
 import { BsBookmarkStarFill } from "react-icons/bs";
 import { GrLinkNext } from "react-icons/gr";
 import { GrLinkPrevious } from "react-icons/gr";
+import { HiPencilSquare } from "react-icons/hi2";
+import { GiNotebook } from "react-icons/gi";
+import { GrCircleInformation } from "react-icons/gr";
+import { FiLogOut } from "react-icons/fi";
+import { AiOutlineDown } from "react-icons/ai";
 
 const icons = {
   AiOutlinePlusCircle,
@@ -26,6 +31,11 @@ const icons = {
   BsBookmarkStarFill,
   GrLinkNext,
   GrLinkPrevious,
+  HiPencilSquare,
+  GiNotebook,
+  GrCircleInformation,
+  FiLogOut,
+  AiOutlineDown,
 };
 
 export default icons;
