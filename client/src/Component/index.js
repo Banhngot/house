@@ -12,3 +12,6 @@ export { default as RelatePost } from "./RelatePost";
 export { default as Sitem } from "./Sitem";
 export { default as Modal } from "./Modal";
 export { default as User } from "./User";
+export { default as Address } from "./Address";
+export { default as Overview } from "./Overview";
+export { default as SelectAddress } from "./SelectAddress";
