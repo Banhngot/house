@@ -1,10 +1,20 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import menuSidebar from "../../Ultils/menuSidebar";
+import { NavLink } from "react-router-dom";
+import * as actions from "../../Store/actions";
+import { FiLogOut } from "react-icons/fi";
+
+const activeStyle =
+  "hover:bg-gray-200 rounded-md flex items-center gap-2 py-2 font-bold bg-gray-200";
+const notActiveStyle =
+  "hover:bg-gray-200 rounded-md flex items-center gap-2 py-2 cursor-pointer";
 
 const Sidebar = () => {
+  const dispatch = useDispatch();
   const { currentData } = useSelector((state) => state.user);
   return (
-    <div className="w-[256px] flex-none p-4">
+    <div className="w-[256px] flex-none p-4 flex flex-col gap-6">
       <div className="flex flex-col gap-4">
         <div className="flex items-center gap-4">
           <img
@@ -22,6 +32,29 @@ const Sidebar = () => {
           <small className="font-medium">
             {currentData?.id?.match(/\d/g).join("")?.slice(0, 6)}
           </small>
+        </span>
+      </div>
+      <div>
+        {menuSidebar.map((item) => {
+          return (
+            <NavLink
+              className={({ isActive }) =>
+                isActive ? activeStyle : notActiveStyle
+              }
+              key={item.id}
+              to={item?.path}
+            >
+              {item.icon}
+              {item.text}
+            </NavLink>
+          );
+        })}
+        <span
+          onClick={() => dispatch(actions.logout())}
+          className={notActiveStyle}
+        >
+          <FiLogOut />
+          Log out
         </span>
       </div>
     </div>
