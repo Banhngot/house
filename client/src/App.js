@@ -8,7 +8,19 @@ import {
   SearchDetail,
 } from "./Containers/Public";
 import { path } from "./Ultils/constant";
+import { System, CreatePost } from "./Containers/System";
+import * as actions from "./Store/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+
 function App() {
+  const dispatch = useDispatch();
+  const { isLoggedIn } = useSelector((state) => state.auth);
+  useEffect(() => {
+    setTimeout(() => {
+      isLoggedIn && dispatch(actions.getCurrent());
+    }, 100);
+  }, [isLoggedIn]);
   return (
     <div className=" bg-primary">
       <Routes>
@@ -25,6 +37,9 @@ function App() {
             path={path.DETAIL_POST__TITLE__POSTID}
             element={<DetailPost />}
           />
+        </Route>
+        <Route path={path.SYSTEM} element={<System />}>
+          <Route path={path.CREATE_POST} element={<CreatePost />} />
         </Route>
       </Routes>
     </div>

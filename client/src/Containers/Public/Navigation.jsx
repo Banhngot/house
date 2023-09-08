@@ -9,7 +9,7 @@ const notActive =
   "hover:bg-[#FFBA86]  px-4 h-full flex items-center bg-bg-[#FF9900]";
 const active = "hover:bg-[#FFBA86]  px-4 h-full flex items-center bg-[#FFBA86]";
 
-const Navigation = () => {
+const Navigation = ({ isAdmin }) => {
   const dispatch = useDispatch();
   const { categories } = useSelector((state) => state.app);
   useEffect(() => {
@@ -17,7 +17,11 @@ const Navigation = () => {
   }, []);
 
   return (
-    <div className="w-full flex justify-center items-center  h-[40px]  bg-[#FF9900] text-white">
+    <div
+      className={`w-full flex ${
+        isAdmin ? "justify-start" : "justify-center"
+      }  items-center  h-[40px]  bg-[#FF9900] text-white`}
+    >
       <div className="w-[65%] flex h-full items-center gap-3 text-black text-sm font-medium">
         <NavLink
           to={`/`}
@@ -33,7 +37,7 @@ const Navigation = () => {
                 className="h-full flex justify-center items-center"
               >
                 <NavLink
-                  to={`${formatVietnameseToString(item.value)}`}
+                  to={`/${formatVietnameseToString(item.value)}`}
                   className={({ isActive }) => (isActive ? active : notActive)}
                 >
                   {item.value}
