@@ -13,7 +13,7 @@ export const register = (payload) => async (dispatch) => {
     } else {
       dispatch({
         type: actionTypes.REGISTER_FAIL,
-        data: response.data.mgs,
+        data: response.data.msg,
       });
     }
   } catch (error) {
@@ -36,7 +36,7 @@ export const login = (payload) => async (dispatch) => {
     } else {
       dispatch({
         type: actionTypes.LOGIN_FAIL,
-        data: response.data.mgs,
+        data: response.data.msg,
       });
     }
   } catch (error) {
