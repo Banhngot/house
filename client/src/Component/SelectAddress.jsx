@@ -1,6 +1,14 @@
 import React, { memo } from "react";
 
-const SelectAddress = ({ label, options, value, setValue, type, reset }) => {
+const SelectAddress = ({
+  label,
+  options,
+  value,
+  setValue,
+  type,
+  reset,
+  name,
+}) => {
   return (
     <div className="flex flex-col gap-2 flex-1">
       <label className="font-medium" htmlFor="select-address">
@@ -8,7 +16,11 @@ const SelectAddress = ({ label, options, value, setValue, type, reset }) => {
       </label>
       <select
         value={reset ? "" : value}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={(e) =>
+          !name
+            ? setValue(e.target.value)
+            : setValue((prev) => ({ ...prev, [name]: e.target.value }))
+        }
         id="select-address"
         className="outline-none border border-gray-300 p-2 rounded-md w-full"
       >
