@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { SelectAddress } from "../Component";
+import { SelectAddress, InputReadOnly } from "../Component";
 import { apiGetPublicDistricts, apiGetPublicProvinces } from "../Service";
 
 const Address = () => {
@@ -49,30 +49,22 @@ const Address = () => {
             label="Quận/Huyện"
           />
         </div>
-        <div className="flex flex-col gap-2">
-          <label className="font-medium" htmlFor="exactly-address">
-            Địa chỉ chính xác
-          </label>
-          <input
-            id="exactly-address"
-            type="text"
-            readOnly
-            className="border border-gray-300 outline-none rounded-md bg-gray-300 p-2 w-full"
-            value={`${
-              district
-                ? `${
-                    districts?.find((item) => item.district_id === district)
-                      ?.district_name
-                  },`
-                : ""
-            } ${
-              province
-                ? provinces?.find((item) => item.province_id === province)
-                    ?.province_name
-                : ""
-            }`}
-          />
-        </div>
+        <InputReadOnly
+          label="Địa chỉ chính xác"
+          value={`${
+            district
+              ? `${
+                  districts?.find((item) => item.district_id === district)
+                    ?.district_name
+                },`
+              : ""
+          } ${
+            province
+              ? provinces?.find((item) => item.province_id === province)
+                  ?.province_name
+              : ""
+          }`}
+        />
       </div>
     </div>
   );
