@@ -11,7 +11,7 @@ const InputReadOnly = ({ label, value }) => {
         type="text"
         readOnly
         className="border border-gray-300 outline-none rounded-md bg-gray-300 p-2 w-full"
-        value={value}
+        value={value || ""}
       />
     </div>
   );
