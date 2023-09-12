@@ -1,7 +1,12 @@
 import React, { useState } from "react";
-import { Overview, Address } from "../../Component";
+import { Overview, Address, Loading, Button } from "../../Component";
 import { FcOldTimeCamera } from "react-icons/fc";
 import { apiUploadImages } from "../../Service";
+import icons from "../../Ultils/icons";
+import { getCodes, getCodesArea } from "../../Ultils/Common/getCodes";
+import { useSelector } from "react-redux";
+
+const { ImBin } = icons;
 
 const CreatePost = () => {
   const [payload, setPayload] = useState({
@@ -18,9 +23,12 @@ const CreatePost = () => {
     province: "",
   });
   const [imagesPreview, setImagesPreview] = useState([]);
-  console.log(payload);
+  const [isLoading, setIsLoading] = useState(false);
+  const { prices, areas } = useSelector((state) => state.app);
+
   const handleFiles = async (e) => {
     e.stopPropagation();
+    setIsLoading(true);
     let images = [];
     let files = e.target.files;
     let formdata = new FormData();
@@ -34,8 +42,34 @@ const CreatePost = () => {
       if (response.status === 200)
         images = [...images, response.data?.secure_url];
     }
-    setImagesPreview(images);
-    setPayload((prev) => ({ ...prev, images: JSON.stringify(images) }));
+    setIsLoading(false);
+    setImagesPreview((prev) => [...prev, ...images]);
+    setPayload((prev) => ({
+      ...prev,
+      images: [...payload.images, ...images],
+    }));
+  };
+
+  const handleDeleteImage = (image) => {
+    setImagesPreview((prev) => prev?.filter((item) => item !== image));
+    setPayload((prev) => [
+      ...prev,
+      prev.images?.filter((item) => item !== image),
+    ]);
+  };
+
+  const handleSubmit = () => {
+    let priceCodeArr = getCodes(+payload.priceNumber, prices, 1, 15);
+    let priceCode = priceCodeArr[0]?.code;
+    let areaCodeArr = getCodesArea(+payload.areaNumber, areas, 0, 90);
+    let areaCode = areaCodeArr[0]?.code;
+
+    let finalPayload = {
+      ...payload,
+      priceCode,
+      areaCode,
+    };
+    console.log(finalPayload);
   };
   return (
     <div className="px-6 ">
@@ -46,7 +80,7 @@ const CreatePost = () => {
         <div className="py-4 flex flex-col gap-8 flex-auto">
           <Address payload={payload} setPayload={setPayload} />
           <Overview payload={payload} setPayload={setPayload} />
-          <div className="w-full">
+          <div className="w-full mb-6">
             <h2 className="font-semibold text-xl py-4">Hình ảnh</h2>
             <span>Cập nhật hình ảnh rõ ràng sẽ cho thuê nhanh hơn</span>
             <div className="w-full">
@@ -54,8 +88,14 @@ const CreatePost = () => {
                 className="w-full border-2 h-[200px] my-4 flex flex-col items-center justify-center border-gray-400 border-dashed rounded-md"
                 htmlFor="file"
               >
-                <FcOldTimeCamera size={50} />
-                Thêm ảnh
+                {isLoading ? (
+                  <Loading />
+                ) : (
+                  <div className="flex flex-col items-center justify-center">
+                    <FcOldTimeCamera size={50} />
+                    Thêm ảnh
+                  </div>
+                )}
               </label>
               <input
                 onChange={handleFiles}
@@ -69,18 +109,32 @@ const CreatePost = () => {
                 <div className="flex gap-4 items-center">
                   {imagesPreview?.map((item) => {
                     return (
-                      <img
-                        key={item}
-                        src={item}
-                        alt="preview"
-                        className="w-1/3 h-1/3 object-cover rounded-md"
-                      />
+                      <div key={item} className="relative w-1/3 h-1/3">
+                        <img
+                          src={item}
+                          alt="preview"
+                          className="w-full h-full object-cover rounded-md"
+                        />
+                        <span
+                          title="Xóa"
+                          onClick={() => handleDeleteImage(item)}
+                          className="absolute top-0 right-0 p-2 cursor-pointer bg-gray-300 hover:bg-gray-400 rounded-full"
+                        >
+                          <ImBin />
+                        </span>
+                      </div>
                     );
                   })}
                 </div>
               </div>
             </div>
           </div>
+          <Button
+            onClick={handleSubmit}
+            text="Tạo mới"
+            bgColor="bg-green-600"
+            textColor="text-white"
+          />
           <div className="h-[500px]"></div>
         </div>
         <div className="w-[30%] flex-none">maps</div>

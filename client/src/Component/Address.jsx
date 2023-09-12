@@ -18,7 +18,7 @@ const Address = ({ setPayload }) => {
   }, []);
 
   useEffect(() => {
-    setDistrict(null);
+    setDistrict("");
     const fetchPublicDistrict = async () => {
       const response = await apiGetPublicDistricts(province);
       if (response.status === 200) setDistricts(response.data?.results);
