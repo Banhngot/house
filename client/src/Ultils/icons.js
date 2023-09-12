@@ -16,6 +16,7 @@ import { GiNotebook } from "react-icons/gi";
 import { GrCircleInformation } from "react-icons/gr";
 import { FiLogOut } from "react-icons/fi";
 import { AiOutlineDown } from "react-icons/ai";
+import { ImBin } from "react-icons/im";
 
 const icons = {
   AiOutlinePlusCircle,
@@ -36,6 +37,7 @@ const icons = {
   GrCircleInformation,
   FiLogOut,
   AiOutlineDown,
+  ImBin,
 };
 
 export default icons;
