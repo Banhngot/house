@@ -25,6 +25,7 @@ const CreatePost = () => {
   const [imagesPreview, setImagesPreview] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const { prices, areas } = useSelector((state) => state.app);
+  const { currentData } = useSelector((state) => state.user);
 
   const handleFiles = async (e) => {
     e.stopPropagation();
@@ -44,22 +45,24 @@ const CreatePost = () => {
     }
     setIsLoading(false);
     setImagesPreview((prev) => [...prev, ...images]);
-    setPayload((prev) => ({
-      ...prev,
-      images: [...payload.images, ...images],
-    }));
+    setPayload((prev) => ({ ...prev, images: [...prev.images, ...images] }));
   };
 
   const handleDeleteImage = (image) => {
     setImagesPreview((prev) => prev?.filter((item) => item !== image));
-    setPayload((prev) => [
+    setPayload((prev) => ({
       ...prev,
-      prev.images?.filter((item) => item !== image),
-    ]);
+      images: prev.images?.filter((item) => item !== image),
+    }));
   };
 
   const handleSubmit = () => {
-    let priceCodeArr = getCodes(+payload.priceNumber, prices, 1, 15);
+    let priceCodeArr = getCodes(
+      +payload.priceNumber / Math.pow(10, 6),
+      prices,
+      1,
+      15
+    );
     let priceCode = priceCodeArr[0]?.code;
     let areaCodeArr = getCodesArea(+payload.areaNumber, areas, 0, 90);
     let areaCode = areaCodeArr[0]?.code;
@@ -68,6 +71,9 @@ const CreatePost = () => {
       ...payload,
       priceCode,
       areaCode,
+      userId: currentData.id,
+      priceNumber: +payload.priceNumber / Math.pow(10, 6),
+      target: payload.target || "Tất cả",
     };
     console.log(finalPayload);
   };
