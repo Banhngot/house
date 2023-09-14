@@ -5,6 +5,7 @@ import { apiUploadImages } from "../../Service";
 import icons from "../../Ultils/icons";
 import { getCodes, getCodesArea } from "../../Ultils/Common/getCodes";
 import { useSelector } from "react-redux";
+import { apiCreatePost } from "../../Service";
 
 const { ImBin } = icons;
 
@@ -58,7 +59,7 @@ const CreatePost = () => {
     }));
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     let priceCodeArr = getCodes(
       +payload.priceNumber / Math.pow(10, 6),
       prices,
@@ -80,7 +81,8 @@ const CreatePost = () => {
         categories?.find((item) => item.code === payload?.categoryCode).value
       } ${payload?.address.split(",")[0]}`,
     };
-    console.log(finalPayload);
+    const response = await apiCreatePost(finalPayload);
+    console.log(response);
   };
   return (
     <div className="px-6 ">
