@@ -15,7 +15,7 @@ export const getPostService = () =>
       const response = await db.Post.findAll({
         raw: true,
         nest: true,
-        include: [
+        includes: [
           { model: db.Image, as: "images", attributes: ["image"] },
           {
             model: db.Attribute,
@@ -51,6 +51,7 @@ export const getPostLimitService = (page, query, { priceNumber, areaNumber }) =>
         nest: true,
         offset: offset * +process.env.LIMIT,
         limit: +process.env.LIMIT,
+        order: [["createdAt", "DESC"]],
         include: [
           { model: db.Image, as: "images", attributes: ["image"] },
           {
@@ -60,7 +61,7 @@ export const getPostLimitService = (page, query, { priceNumber, areaNumber }) =>
           },
           { model: db.User, as: "user", attributes: ["name", "zalo", "phone"] },
         ],
-        attributes: ["id", "title", "star", "address", "description"],
+        // attributes: ["id", "title", "star", "address", "description"],
       });
       resolve({
         err: response ? 0 : 1,
@@ -118,23 +119,25 @@ export const createNewPostsService = (body, userId) =>
         address: body.address || null,
         attributesId,
         categoryCode: body.categoryCode,
-        description: body.description || null,
+        description: JSON.stringify(body.description) || null,
         userId,
         overviewId,
         imagesId,
         areaCode: body.areaCode || null,
         priceCode: body.priceCode || null,
-        provinceCode: body.provinceCode || null,
+        provinceCode: body?.province?.includes("Thành phố")
+          ? generateCode(body?.province?.replace("Thành phố", ""))
+          : generateCode(body?.province?.replace("Tỉnh", "")) || null,
         priceNumber: body.priceNumber,
         areaNumber: body.areaNumber,
       });
       await db.Attribute.create({
         id: attributesId,
         price:
-          +priceNumber < 1
-            ? `${+priceNumber * 1000000} đồng/tháng`
-            : `${priceNumber} triệu/tháng`,
-        acreage: `${areaNumber} m2`,
+          +body.priceNumber < 1
+            ? `${+body.priceNumber * 1000000} đồng/tháng`
+            : `${body.priceNumber} triệu/tháng`,
+        acreage: `${body.areaNumber} m2`,
         published: moment(new Date()).format("DD/MM/YYYY"),
         hashtag,
       });
@@ -160,10 +163,10 @@ export const createNewPostsService = (body, userId) =>
           ],
         },
         defaults: {
-          code: body?.province?.include("Thành phố")
+          code: body?.province?.includes("Thành phố")
             ? generateCode(body?.province?.replace("Thành phố", ""))
             : generateCode(body?.province?.replace("Tỉnh", "")),
-          value: body?.province?.include("Thành phố")
+          value: body?.province?.includes("Thành phố")
             ? body?.province?.replace("Thành phố", "")
             : body?.province?.replace("Tỉnh", ""),
         },
