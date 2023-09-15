@@ -5,6 +5,7 @@ const initState = {
   mgs: "",
   count: 0,
   newPost: [],
+  postOfCurrent: [],
 };
 
 const postReducer = (state = initState, action) => {
@@ -23,6 +24,12 @@ const postReducer = (state = initState, action) => {
 
         mgs: action.mgs || "",
         newPosts: action.newPosts || [],
+      };
+    case actionTypes.GET_POST_ADMIN:
+      return {
+        ...state,
+        mgs: action.mgs || "",
+        postOfCurrent: action.posts || [],
       };
 
     default:
