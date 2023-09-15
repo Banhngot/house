@@ -6,7 +6,7 @@ import icons from "../../Ultils/icons";
 import { getCodes, getCodesArea } from "../../Ultils/Common/getCodes";
 import { useSelector } from "react-redux";
 import { apiCreatePost } from "../../Service";
-import { Swal } from "sweetalert2";
+import Swal from "sweetalert2";
 
 const { ImBin } = icons;
 
