@@ -152,7 +152,7 @@ export const createNewPostsService = (body, userId) =>
         type: body.category,
         target: body.target,
         bonus: "Tin thường",
-        created: currentDate,
+        created: currentDate.toJSON(),
         expired: currentDate.setDate(currentDate.getDate() + 10),
       });
       await db.Province.findOrCreate({
