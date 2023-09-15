@@ -8,7 +8,20 @@ const SelectAddress = ({
   type,
   reset,
   name,
+  invalidFields,
+  setInvalidFields,
 }) => {
+  const handleErrorText = () => {
+    let textError = "";
+    let nameInvalid = invalidFields?.find((item) => item.name === name);
+    let addressInvalid = invalidFields?.find((item) => item.name === "address");
+
+    return (
+      `${nameInvalid ? nameInvalid.message : ""}` ||
+      `${addressInvalid ? addressInvalid.message : ""}`
+    );
+  };
+
   return (
     <div className="flex flex-col gap-2 flex-1">
       <label className="font-medium" htmlFor="select-address">
@@ -23,6 +36,7 @@ const SelectAddress = ({
         }
         id="select-address"
         className="outline-none border border-gray-300 p-2 rounded-md w-full"
+        onFocus={() => setInvalidFields([])}
       >
         <option value="">{`--Chọn ${label}--`}</option>
         {options?.map((item) => {
@@ -52,6 +66,7 @@ const SelectAddress = ({
           );
         })}
       </select>
+      <small className="text-red-500">{handleErrorText()}</small>
     </div>
   );
 };

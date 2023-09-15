@@ -2,7 +2,7 @@ import React, { memo, useEffect, useState } from "react";
 import { SelectAddress, InputReadOnly } from "../Component";
 import { apiGetPublicDistricts, apiGetPublicProvinces } from "../Service";
 
-const Address = ({ setPayload }) => {
+const Address = ({ setPayload, invalidFields, setInvalidFields }) => {
   const [provinces, setProvinces] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [province, setProvince] = useState("");
@@ -58,6 +58,8 @@ const Address = ({ setPayload }) => {
       <div className="flex flex-col gap-4">
         <div className="flex items-center gap-4">
           <SelectAddress
+            invalidFields={invalidFields}
+            setInvalidFields={setInvalidFields}
             type="province"
             value={province}
             setValue={setProvince}
@@ -65,6 +67,8 @@ const Address = ({ setPayload }) => {
             label="Tỉnh/Thành phố"
           />
           <SelectAddress
+            invalidFields={invalidFields}
+            setInvalidFields={setInvalidFields}
             reset={reset}
             type="district"
             value={district}

@@ -5,9 +5,10 @@ import { useSelector } from "react-redux";
 const targets = [
   { code: "Nam", value: "Nam" },
   { code: "Nữ", value: "Nữ" },
+  { code: "Tất cả", value: "Tất cả" },
 ];
 
-const Overview = ({ payload, setPayload }) => {
+const Overview = ({ payload, setPayload, invalidFields, setInvalidFields }) => {
   const { categories } = useSelector((state) => state.app);
   const { currentData } = useSelector((state) => state.user);
   return (
@@ -16,6 +17,8 @@ const Overview = ({ payload, setPayload }) => {
       <div className="w-full flex flex-col gap-4">
         <div className="w-1/2">
           <SelectAddress
+            invalidFields={invalidFields}
+            setInvalidFields={setInvalidFields}
             value={payload.categoryCode}
             setValue={setPayload}
             name="categoryCode"
@@ -24,6 +27,8 @@ const Overview = ({ payload, setPayload }) => {
           />
         </div>
         <InputFormV2
+          invalidFields={invalidFields}
+          setInvalidFields={setInvalidFields}
           value={payload.title}
           setValue={setPayload}
           name="title"
@@ -40,7 +45,13 @@ const Overview = ({ payload, setPayload }) => {
             onChange={(e) =>
               setPayload((prev) => ({ ...prev, description: e.target.value }))
             }
+            onFocus={() => setInvalidFields([])}
           ></textarea>
+          <small className="text-red-500 block w-full">
+            {invalidFields?.some((item) => item.name === "description") &&
+              invalidFields?.find((item) => item.name === "description")
+                ?.message}
+          </small>
         </div>
 
         <div className="w-1/2 flex flex-col gap-4">
@@ -50,6 +61,8 @@ const Overview = ({ payload, setPayload }) => {
           />
           <InputReadOnly label="Điện thoại" value={currentData?.phone} />
           <InputFormV2
+            invalidFields={invalidFields}
+            setInvalidFields={setInvalidFields}
             value={payload.priceNumber}
             setValue={setPayload}
             small="Nhập đầy đủ số, ví dụ 1 triệu thì ghi 1000000"
@@ -58,6 +71,8 @@ const Overview = ({ payload, setPayload }) => {
             name="priceNumber"
           />
           <InputFormV2
+            invalidFields={invalidFields}
+            setInvalidFields={setInvalidFields}
             value={payload.areaNumber}
             setValue={setPayload}
             name="areaNumber"
@@ -65,6 +80,8 @@ const Overview = ({ payload, setPayload }) => {
             unit="m2"
           />
           <SelectAddress
+            invalidFields={invalidFields}
+            setInvalidFields={setInvalidFields}
             value={payload.target}
             setValue={setPayload}
             name="target"
