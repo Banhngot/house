@@ -10,6 +10,7 @@ export const path = {
   SEARCH: "tiem-kiem",
   SYSTEM: "/he-thong/*",
   CREATE_POST: "tao-moi-bai-dang",
+  MANAGE_POST: "quan-li-bai-dang",
 };
 
 export const text = {

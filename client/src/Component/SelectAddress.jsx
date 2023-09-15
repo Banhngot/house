@@ -66,7 +66,9 @@ const SelectAddress = ({
           );
         })}
       </select>
-      <small className="text-red-500">{handleErrorText()}</small>
+      {invalidFields && (
+        <small className="text-red-500">{handleErrorText()}</small>
+      )}
     </div>
   );
 };
