@@ -6,6 +6,7 @@ import icons from "../../Ultils/icons";
 import { getCodes, getCodesArea } from "../../Ultils/Common/getCodes";
 import { useSelector } from "react-redux";
 import { apiCreatePost } from "../../Service";
+import { Swal } from "sweetalert2";
 
 const { ImBin } = icons;
 
@@ -82,7 +83,25 @@ const CreatePost = () => {
       } ${payload?.address.split(",")[0]}`,
     };
     const response = await apiCreatePost(finalPayload);
-    console.log(response);
+    if (response?.data.err === 0) {
+      Swal.fire("Thành công", "Đã thêm bài đăng mới", "success").then(() => {
+        setPayload({
+          categoryCode: "",
+          title: "",
+          priceNumber: 0,
+          areaNumber: 0,
+          images: "",
+          address: "",
+          priceCode: "",
+          areaCode: "",
+          description: "",
+          target: "",
+          province: "",
+        });
+      });
+    } else {
+      Swal.fire("Oops !", "lỗi", "error");
+    }
   };
   return (
     <div className="px-6 ">
