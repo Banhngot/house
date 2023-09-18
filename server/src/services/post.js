@@ -214,8 +214,11 @@ export const getPostLimitAdminService = (page, id, query) =>
             attributes: ["price", "acreage", "published", "hashtag"],
           },
           { model: db.User, as: "user", attributes: ["name", "zalo", "phone"] },
+          {
+            model: db.Overview,
+            as: "overviews",
+          },
         ],
-        // attributes: ["id", "title", "star", "address", "description"],
       });
       resolve({
         err: response ? 0 : 1,
