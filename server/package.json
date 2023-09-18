@@ -14,17 +14,17 @@
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
-    "jsonwebtoken": "^9.0.1",
+    "jsonwebtoken": "^9.0.2",
     "moment": "^2.29.4",
     "mysql2": "^2.3.3",
-    "nodemon": "^2.0.19",
-    "sequelize": "^6.21.3",
-    "uuid": "^9.0.0"
+    "nodemon": "^2.0.22",
+    "sequelize": "^6.33.0",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.22.11",
-    "@babel/node": "^7.22.10",
-    "@babel/preset-env": "^7.22.14",
-    "sequelize-cli": "6.4.1"
+    "@babel/core": "^7.22.20",
+    "@babel/node": "^7.22.19",
+    "@babel/preset-env": "^7.22.20",
+    "sequelize-cli": "^6.4.1"
   }
 }
