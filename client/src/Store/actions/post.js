@@ -3,6 +3,7 @@ import {
   apiGetNewPosts,
   apiGetPosts,
   apiGetPostsLimit,
+  apiGetPostsLimitAdmin,
 } from "../../Service/post";
 
 export const getPosts = () => async (dispatch) => {
@@ -71,6 +72,31 @@ export const getNewPosts = () => async (dispatch) => {
     dispatch({
       type: actionTypes.GET_NEW_POST,
       newPosts: null,
+    });
+  }
+};
+
+export const getPostsLimitAdmin = (query) => async (dispatch) => {
+  try {
+    const response = await apiGetPostsLimitAdmin(query);
+
+    if (response?.data.err === 0) {
+      dispatch({
+        type: actionTypes.GET_POST_ADMIN,
+        posts: response.data.response?.rows,
+        count: response.data.response?.count,
+      });
+    } else {
+      dispatch({
+        type: actionTypes.GET_POST_ADMIN,
+        msg: response.data.mgs,
+        post: null,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: actionTypes.GET_POST_ADMIN,
+      posts: null,
     });
   }
 };
