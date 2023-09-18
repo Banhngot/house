@@ -12,7 +12,6 @@ const SelectAddress = ({
   setInvalidFields,
 }) => {
   const handleErrorText = () => {
-    let textError = "";
     let nameInvalid = invalidFields?.find((item) => item.name === name);
     let addressInvalid = invalidFields?.find((item) => item.name === "address");
 

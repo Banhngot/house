@@ -8,6 +8,8 @@ import generateCode from "../ultils/generateCode";
 
 import moment from "moment";
 
+import generateDate from "../ultils/generateDate";
+
 // Get all post
 export const getPostService = () =>
   new Promise(async (resolve, reject) => {
@@ -110,7 +112,7 @@ export const createNewPostsService = (body, userId) =>
       const overviewId = generateId();
       const labelCode = generateCode(body.label);
       const hashtag = `#${Math.floor(Math.random() * Math.pow(10, 6))}`;
-      const currentDate = new Date();
+      const currentDate = generateDate();
 
       await db.Post.create({
         id: generateId(),
@@ -152,8 +154,8 @@ export const createNewPostsService = (body, userId) =>
         type: body.category,
         target: body.target,
         bonus: "Tin thường",
-        created: currentDate.toJSON(),
-        expired: currentDate.setDate(currentDate.getDate() + 10),
+        created: currentDate.today,
+        expired: currentDate.expireDay,
       });
       await db.Province.findOrCreate({
         where: {
