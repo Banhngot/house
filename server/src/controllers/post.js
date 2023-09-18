@@ -59,3 +59,26 @@ export const createNewPosts = async (req, res) => {
     });
   }
 };
+
+export const getPostLimitAdmin = async (req, res) => {
+  const { page, ...query } = req.query;
+  const { id } = req.user;
+  try {
+    if (!id)
+      return res.status(400).json({
+        err: 1,
+        msg: "Missing input",
+      });
+    const response = await postService.getPostLimitAdminService(
+      page,
+      id,
+      query
+    );
+    return res.status(200).json(response);
+  } catch (error) {
+    return res.status(500).json({
+      err: -1,
+      msg: "fail at post controller" + error,
+    });
+  }
+};

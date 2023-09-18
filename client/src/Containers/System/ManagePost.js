@@ -9,7 +9,7 @@ const ManagePost = () => {
           <option value="">Lọc theo trạng thái</option>
         </select>
       </div>
-      <table class="w-full">
+      <table className="w-full">
         <thead>
           <tr>
             <th>Mã tin</th>
