@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../../Store/actions";
 import moment from "moment";
-import "moment/locale/vi";
 
 const ManagePost = () => {
   const dispatch = useDispatch();
@@ -12,12 +11,10 @@ const ManagePost = () => {
     dispatch(actions.getPostsLimitAdmin());
   }, []);
 
-  const checkStatus = (datetime) => {
-    let todayInSeconds = new Date().getTime();
-    let expireDayInSecond = datetime.getTime();
-    return todayInSeconds >= expireDayInSecond
-      ? "Đang hoạt động"
-      : "Đã hết hạn";
+  const checkStatus = (dateString) => {
+    return moment(dateString, process.env.REACT_APP_FORMAT_DATE).isSameOrAfter(
+      new Date().toDateString()
+    );
   };
 
   return (
@@ -70,9 +67,9 @@ const ManagePost = () => {
                     {item?.overviews?.expired}
                   </td>
                   <td className="border text-center p-2">
-                    {checkStatus(
-                      new Date(item?.overviews?.expired?.split(" ")[3])
-                    )}
+                    {checkStatus(item?.overviews?.expired?.split(" ")[3])
+                      ? "Đang hoạt động"
+                      : "Đã hết hạn"}
                   </td>
                 </tr>
               );
