@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../../Store/actions";
 import moment from "moment";
+import { Button } from "../../Component";
 
 const ManagePost = () => {
   const dispatch = useDispatch();
@@ -27,14 +28,15 @@ const ManagePost = () => {
       </div>
       <table className="w-full table-auto">
         <thead>
-          <tr>
-            <th className="border p-2">Mã tin</th>
-            <th className="border p-2">Ảnh đại diện</th>
-            <th className="border p-2">Tiêu đề</th>
-            <th className="border p-2">Giá</th>
-            <th className="border p-2">Ngày bắt đầu</th>
-            <th className="border p-2">Ngày hết hạn</th>
-            <th className="border p-2">Trạng thái</th>
+          <tr className="flex w-full bg-orange-400">
+            <th className="border flex-1 p-2">Mã tin</th>
+            <th className="border flex-1 p-2">Ảnh đại diện</th>
+            <th className="border flex-1 p-2">Tiêu đề</th>
+            <th className="border flex-1 p-2">Giá</th>
+            <th className="border flex-1 p-2">Ngày bắt đầu</th>
+            <th className="border flex-1 p-2">Ngày hết hạn</th>
+            <th className="border flex-1 p-2">Trạng thái</th>
+            <th className="border flex-1 p-2">Tùy chọn</th>
           </tr>
         </thead>
         <tbody>
@@ -45,31 +47,45 @@ const ManagePost = () => {
           ) : (
             postOfCurrent?.map((item) => {
               return (
-                <tr key={item.id}>
-                  <td className="border text-center p-2">
+                <tr className="flex items-center h-16" key={item.id}>
+                  <td className="border px-2 flex-1 h-full flex justify-center items-center ">
                     {item?.overviews?.code}
                   </td>
-                  <td className="border flex items-center justify-center p-2">
+                  <td className="border px-2 flex-1 h-full flex items-center justify-center ">
                     <img
                       src={JSON.parse(item.images?.image)[0] || ""}
                       alt="avatar-post"
                       className="w-10 h-10 object-cover rounded-md"
                     />
                   </td>
-                  <td className="border text-center p-2">{item?.title}</td>
-                  <td className="border text-center p-2">
+                  <td className="border px-2 flex-1 h-full flex justify-center items-center ">
+                    {`${item?.title?.slice(0, 20)}...`}
+                  </td>
+                  <td className="border px-2 flex-1 h-full flex justify-center items-center ">
                     {item?.attributes?.price}
                   </td>
-                  <td className="border text-center p-2">
+                  <td className="border px-2 flex-1 h-full flex justify-center items-center ">
                     {item?.overviews?.created}
                   </td>
-                  <td className="border text-center p-2">
+                  <td className="border px-2 flex-1 h-full flex justify-center items-center ">
                     {item?.overviews?.expired}
                   </td>
-                  <td className="border text-center p-2">
+                  <td className="border px-2 flex-1 h-full flex justify-center items-center ">
                     {checkStatus(item?.overviews?.expired?.split(" ")[3])
                       ? "Đang hoạt động"
                       : "Đã hết hạn"}
+                  </td>
+                  <td className="border px-2 flex-1 h-full flex items-center justify-center gap-2">
+                    <Button
+                      text="Sửa"
+                      bgColor="bg-green-500"
+                      textColor="text-white"
+                    />
+                    <Button
+                      text="Xóa"
+                      bgColor="bg-red-500"
+                      textColor="text-white"
+                    />
                   </td>
                 </tr>
               );
