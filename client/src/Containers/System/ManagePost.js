@@ -10,8 +10,8 @@ const ManagePost = () => {
   const { postOfCurrent, dataEdit } = useSelector((state) => state.post);
 
   useEffect(() => {
-    dispatch(actions.getPostsLimitAdmin());
-  }, []);
+    !dataEdit && dispatch(actions.getPostsLimitAdmin());
+  }, [dataEdit]);
 
   useEffect(() => {
     !dataEdit && setIsEdit(false);
