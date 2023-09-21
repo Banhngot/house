@@ -1,13 +1,38 @@
 import React, { memo, useEffect, useState } from "react";
 import { SelectAddress, InputReadOnly } from "../Component";
 import { apiGetPublicDistricts, apiGetPublicProvinces } from "../Service";
+import { useSelector } from "react-redux";
 
 const Address = ({ setPayload, invalidFields, setInvalidFields }) => {
+  const { dataEdit } = useSelector((state) => state.post);
+
   const [provinces, setProvinces] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [province, setProvince] = useState("");
   const [district, setDistrict] = useState("");
   const [reset, setReset] = useState(false);
+
+  useEffect(() => {
+    let addressArr = dataEdit?.address?.split(",");
+    let foundProvince =
+      provinces.length > 0 &&
+      provinces?.find(
+        (item) =>
+          item.province_name === addressArr[addressArr.length - 1]?.trim()
+      );
+    setProvince(foundProvince ? foundProvince.province_id : "");
+  }, [provinces]);
+
+  useEffect(() => {
+    let addressArr = dataEdit?.address?.split(",");
+    let foundDistrict =
+      districts.length > 0 &&
+      districts?.find(
+        (item) =>
+          item.district_name === addressArr[addressArr.length - 2]?.trim()
+      );
+    setDistrict(foundDistrict ? foundDistrict.district_id : "");
+  }, [districts]);
 
   useEffect(() => {
     const fetchPublicProvince = async () => {
