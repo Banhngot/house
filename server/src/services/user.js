@@ -20,3 +20,19 @@ export const getOne = (id) =>
       reject(error);
     }
   });
+
+export const updateUser = (payload, id) =>
+  new Promise(async (resolve, reject) => {
+    try {
+      const response = await db.User.update(payload, {
+        where: { id },
+      });
+      resolve({
+        err: response[0] > 0 ? 0 : 1,
+        msg: response[0] > 0 ? "Updated" : "update fail",
+        response,
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });

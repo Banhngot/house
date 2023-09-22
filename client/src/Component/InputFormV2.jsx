@@ -28,7 +28,7 @@ const InputFormV2 = ({
             onChange={(e) =>
               setValue((prev) => ({ ...prev, [name]: e.target.value }))
             }
-            onFocus={() => setInvalidFields([])}
+            onFocus={() => setInvalidFields && setInvalidFields([])}
           />
           {unit && (
             <span className="p-2 border flex-none w-16 flex items-center justify-center rounded-tr-md rounded-br-md bg-gray-200">

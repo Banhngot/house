@@ -2,10 +2,9 @@ import React, { useState } from "react";
 import { InputReadOnly, InputFormV2, Button } from "../../Component";
 import logo from "../../assests/logo.png";
 import { useSelector } from "react-redux";
-import { apiUploadImages } from "../../Service";
+import { apiUploadImages, apiUpdateUser } from "../../Service";
 
 const EditAccount = () => {
-  const [invalidFields, setInvalidFields] = useState([]);
   const { currentData } = useSelector((state) => state.user);
   const [payload, setPayload] = useState({
     name: currentData?.name || "",
@@ -14,8 +13,9 @@ const EditAccount = () => {
     zalo: currentData?.zalo || "",
   });
 
-  const handleSubmit = () => {
-    console.log(payload);
+  const handleSubmit = async () => {
+    const response = await apiUpdateUser(payload);
+    console.log(response);
   };
   const handleUploadFile = async (e) => {
     const image = e.target.files[0];
@@ -39,7 +39,7 @@ const EditAccount = () => {
       <div className="w-3/5 flex items-center justify-center flex-auto">
         <div className="py-6 flex flex-col gap-4 w-full">
           <InputReadOnly
-            value={currentData?.id.match(/\d/g).join("")?.slice(0, 6) || ""}
+            value={currentData?.id?.match(/\d/g).join("")?.slice(0, 6) || ""}
             direction="flex-row"
             label="Mã thành viên"
           />
@@ -54,8 +54,6 @@ const EditAccount = () => {
             name="name"
             setValue={setPayload}
             value={payload.name}
-            invalidFields={invalidFields}
-            setInvalidFields={setInvalidFields}
             direction="flex-row"
             label="Tên hiển thị"
           />
@@ -63,8 +61,6 @@ const EditAccount = () => {
             name="zalo"
             setValue={setPayload}
             direction="flex-row"
-            invalidFields={invalidFields}
-            setInvalidFields={setInvalidFields}
             value={payload.zalo}
             label="Zalo"
           />
@@ -72,8 +68,6 @@ const EditAccount = () => {
             name="fbUrl"
             setValue={setPayload}
             direction="flex-row"
-            invalidFields={invalidFields}
-            setInvalidFields={setInvalidFields}
             value={payload.fbUrl}
             label="Facebook"
           />
