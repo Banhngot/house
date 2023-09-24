@@ -1,6 +1,8 @@
 import React, { memo, useState } from "react";
 import icons from "../Ultils/icons";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { formatVietnameseToString } from "../Ultils/Common/formatVietnameseToString";
+import { path } from "../Ultils/constant";
 
 const indexs = [0, 1, 2, 3];
 const { IoMdStar, AiFillHeart, AiOutlineHeart, BsBookmarkStarFill } = icons;
@@ -16,8 +18,6 @@ const Item = ({
 }) => {
   const [isHoverHeart, setHorverHeart] = useState(false);
 
-  const navigate = useNavigate();
-
   const handleStar = (star) => {
     let stars = [];
     for (let i = 1; i <= +star; i++) {
@@ -29,7 +29,9 @@ const Item = ({
   return (
     <div className="w-full flex border-t border-orange-600 py-4">
       <Link
-        to={`chi-tiet/${title}/${id}`}
+        to={`${path.DETAIL}${formatVietnameseToString(
+          title?.replaceAll("/", "")
+        )}/${id}`}
         className="w-2/5 flex flex-wrap gap-[2px] items-center relative cursor-pointer"
       >
         {images.length > 0 &&
@@ -48,7 +50,7 @@ const Item = ({
         <span className="bg-overlay-70 text-white px-2 rounded-md absolute left-1 bottom-3">
           {`${images.length} ảnh`}
         </span>
-        <div
+        <span
           className="text-white absolute right-5 bottom-1"
           onMouseEnter={() => setHorverHeart(true)}
           onMouseLeave={() => setHorverHeart(false)}
@@ -58,17 +60,22 @@ const Item = ({
           ) : (
             <AiOutlineHeart size={26} />
           )}
-        </div>
+        </span>
       </Link>
       <div className="w-3/5">
         <div className="flex justify-between gap-4">
-          <div className="text-red-600 font-medium ">
+          <Link
+            to={`${path.DETAIL}${formatVietnameseToString(
+              title?.replaceAll("/", "")
+            )}/${id}`}
+            className="text-red-600 font-medium "
+          >
             {handleStar(+star).length > 0 &&
               handleStar(star).map((star, number) => {
                 return <span key={number}>{star}</span>;
               })}
             {title}
-          </div>
+          </Link>
           <div className="w-[10%] flex justify-end">
             <BsBookmarkStarFill size={24} color="orange" />
           </div>
