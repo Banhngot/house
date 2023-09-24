@@ -4,6 +4,7 @@ import menuSidebar from "../../Ultils/menuSidebar";
 import { NavLink } from "react-router-dom";
 import * as actions from "../../Store/actions";
 import { FiLogOut } from "react-icons/fi";
+import { blobToBase64 } from "../../Ultils/Common/toBase64";
 
 const activeStyle =
   "hover:bg-gray-200 rounded-md flex items-center gap-2 py-2 font-bold bg-gray-200";
@@ -18,7 +19,10 @@ const Sidebar = () => {
       <div className="flex flex-col gap-4">
         <div className="flex items-center gap-4">
           <img
-            src="https://lnsel.com/wp-content/uploads/2018/12/anon-avatar-300x300.png"
+            src={
+              blobToBase64(currentData?.avatar) ||
+              `https://lnsel.com/wp-content/uploads/2018/12/anon-avatar-300x300.png`
+            }
             alt="avatar"
             className="w-12 h-12 object-cover rounded-full border-2 shadow-md border-white"
           />
