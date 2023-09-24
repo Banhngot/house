@@ -17,6 +17,9 @@ import { GrCircleInformation } from "react-icons/gr";
 import { FiLogOut } from "react-icons/fi";
 import { AiOutlineDown } from "react-icons/ai";
 import { ImBin } from "react-icons/im";
+import { GrMapLocation } from "react-icons/gr";
+import { BsStopwatch } from "react-icons/bs";
+import { BsHash } from "react-icons/bs";
 
 const icons = {
   AiOutlinePlusCircle,
@@ -38,6 +41,9 @@ const icons = {
   FiLogOut,
   AiOutlineDown,
   ImBin,
+  GrMapLocation,
+  BsStopwatch,
+  BsHash,
 };
 
 export default icons;

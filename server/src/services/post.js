@@ -68,6 +68,7 @@ export const getPostLimitService = (
             attributes: ["price", "acreage", "published", "hashtag"],
           },
           { model: db.User, as: "user", attributes: ["name", "zalo", "phone"] },
+          { model: db.Overview, as: "overviews" },
         ],
         // attributes: ["id", "title", "star", "address", "description"],
       });

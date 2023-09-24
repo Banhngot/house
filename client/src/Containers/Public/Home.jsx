@@ -9,7 +9,6 @@ import { path } from "../../Ultils/constant";
 const Home = () => {
   const { isLoggedIn } = useSelector((state) => state.auth);
   const location = useLocation();
-  console.log(location);
 
   return (
     <div className="w-full flex gap-6 flex-col items-center h-ful">
