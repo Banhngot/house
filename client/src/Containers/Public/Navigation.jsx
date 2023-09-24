@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 import { formatVietnameseToString } from "../../Ultils/Common/formatVietnameseToString";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../../Store/actions";
+import { path } from "../../Ultils/constant";
 
 const notActive =
   "hover:bg-[#FFBA86]  px-4 h-full flex items-center bg-bg-[#FF9900]";
@@ -45,6 +46,12 @@ const Navigation = ({ isAdmin }) => {
               </div>
             );
           })}
+        <NavLink
+          to={path.CONTACT}
+          className={({ isActive }) => (isActive ? active : notActive)}
+        >
+          Liên hệ
+        </NavLink>
       </div>
     </div>
   );
