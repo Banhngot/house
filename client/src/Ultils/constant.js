@@ -40,3 +40,8 @@ export const location = [
     image: "https://phongtro123.com/images/location_dn.jpg",
   },
 ];
+
+export const underMap = [
+  "Bạn đang xem nội dung tin đăng: '",
+  "'. Mọi thông tin liên quan đến tin đăng này chỉ mang tính chất tham khảo. Nếu bạn có phản hồi với tin đăng này (báo xấu, tin đã cho thuê, không liên lạc được,...), vui lòng thông báo để Dreamhouse có thể xử lý",
+];
