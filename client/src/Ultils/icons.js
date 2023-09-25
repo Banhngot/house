@@ -21,6 +21,8 @@ import { GrMapLocation } from "react-icons/gr";
 import { BsStopwatch } from "react-icons/bs";
 import { BsHash } from "react-icons/bs";
 import { CiLocationOn } from "react-icons/ci";
+import { GoDotFill } from "react-icons/go";
+import { AiFillPhone } from "react-icons/ai";
 
 const icons = {
   AiOutlinePlusCircle,
@@ -46,6 +48,8 @@ const icons = {
   BsStopwatch,
   BsHash,
   CiLocationOn,
+  GoDotFill,
+  AiFillPhone,
 };
 
 export default icons;

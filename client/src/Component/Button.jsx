@@ -1,6 +1,14 @@
 import React, { memo } from "react";
 
-const Button = ({ text, textColor, bgColor, IcAfter, onClick, fullWidth }) => {
+const Button = ({
+  text,
+  textColor,
+  bgColor,
+  IcAfter,
+  onClick,
+  fullWidth,
+  IcBefore,
+}) => {
   return (
     <button
       type="button"
@@ -10,6 +18,11 @@ const Button = ({ text, textColor, bgColor, IcAfter, onClick, fullWidth }) => {
       onClick={onClick}
     >
       <span className="text-center">{text}</span>
+      {IcBefore && (
+        <span>
+          <IcBefore />
+        </span>
+      )}
       {IcAfter && (
         <span>
           <IcAfter />

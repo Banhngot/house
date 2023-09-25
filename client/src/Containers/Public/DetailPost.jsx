@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getPostsLimit } from "../../Store/actions";
 import { Slider } from "../../Component";
 import icons from "../../Ultils/icons";
-import { Map } from "../../Component";
+import { Map, Boxinfo, RelatePost } from "../../Component";
 import { underMap } from "../../Ultils/constant";
 
 const { GrMapLocation, BiMoney, BiArea, BsStopwatch, BsHash } = icons;
@@ -129,7 +129,7 @@ const DetailPost = () => {
           {posts && (
             <div className="mt-8">
               <h3 className="font-semibold text-xl my-4">Bản đồ</h3>
-              <Map address={posts[0].address} />
+              <Map address={posts[0]?.address} />
               <span className="text-gray-500  text-sm py-4 text-justify">
                 {underMap[0]}
               </span>
@@ -143,7 +143,10 @@ const DetailPost = () => {
           )}
         </div>
       </div>
-      <div className="w-[30%]">content</div>
+      <div className="w-[30%] flex flex-col gap-8">
+        <Boxinfo userData={posts[0]?.user} />
+        <RelatePost />
+      </div>
     </div>
   );
 };
