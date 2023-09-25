@@ -7,6 +7,7 @@ const initState = {
   newPost: [],
   postOfCurrent: [],
   dataEdit: null,
+  outStandingPost: [],
 };
 
 const postReducer = (state = initState, action) => {
@@ -25,6 +26,13 @@ const postReducer = (state = initState, action) => {
 
         mgs: action.mgs || "",
         newPosts: action.newPosts || [],
+      };
+    case actionTypes.GET_OUTSTANDING:
+      return {
+        ...state,
+
+        mgs: action.mgs || "",
+        outStandingPost: action.outStandingPost || [],
       };
     case actionTypes.GET_POST_ADMIN:
       return {

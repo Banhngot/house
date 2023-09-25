@@ -146,6 +146,7 @@ const DetailPost = () => {
       <div className="w-[30%] flex flex-col gap-8">
         <Boxinfo userData={posts[0]?.user} />
         <RelatePost />
+        <RelatePost newPost />
       </div>
     </div>
   );

@@ -1,8 +1,17 @@
 import React from "react";
 import moment from "moment";
+import icons from "../Ultils/icons";
 // import "moment/locale/vi";
 
-const Sitem = ({ title, price, image, createdAt }) => {
+const { IoMdStar } = icons;
+const Sitem = ({ title, price, image, createdAt, star }) => {
+  const handleStar = (star) => {
+    let stars = [];
+    for (let i = 1; i <= +star; i++) {
+      stars.push(<IoMdStar className="star-item" size={20} color="yellow" />);
+    }
+    return stars;
+  };
   return (
     <div className="w-full flex items-center gap-1 py-2 gap-2 border-b border-gray-300">
       <img
@@ -10,11 +19,14 @@ const Sitem = ({ title, price, image, createdAt }) => {
         alt="anh"
         className="w-[65px] h-[65px] object-cover flex-none rounded-md"
       />
-      <div className="w-full  flex-auto flex-col justify-between gap-1">
-        <h4 className="text-blue-600 text-[14px]">{`${title?.slice(
-          0,
-          40
-        )}...`}</h4>
+      <div className="w-full flex-auto flex-col justify-between gap-1">
+        <h4 className="text-blue-600 text-[14px]">
+          {handleStar(+star).length > 0 &&
+            handleStar(star).map((star, number) => {
+              return <span key={number}>{star}</span>;
+            })}
+          {`${title?.slice(0, 45)}...`}
+        </h4>
         <div className="flex items-center justify-between w-full">
           <span className="text-sm font-medium text-green-500">{price}</span>
           <span className="text-sm text-gray-300">
