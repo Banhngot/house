@@ -6,7 +6,6 @@ import { Slider } from "../../Component";
 import icons from "../../Ultils/icons";
 import { Map } from "../../Component";
 import { underMap } from "../../Ultils/constant";
-import { geocodeByAddress, getLatLng } from "react-google-places-autocomplete";
 
 const { GrMapLocation, BiMoney, BiArea, BsStopwatch, BsHash } = icons;
 
@@ -14,27 +13,11 @@ const DetailPost = () => {
   const { postId } = useParams();
   const dispatch = useDispatch();
   const { posts } = useSelector((state) => state.post);
-  const [coords, setCoords] = useState(null);
 
   useEffect(() => {
     postId && dispatch(getPostsLimit({ id: postId }));
   }, [postId]);
   console.log(posts);
-
-  useEffect(() => {
-    // navigator.geolocation.getCurrentPosition(
-    //   ({ coords: { longitude, latitude } }) => {
-    //     setCoords({ lat: latitude, lng: longitude });
-    //   }
-    // );
-
-    const getCoords = async () => {
-      const results = await geocodeByAddress(posts[0]?.address);
-      const latLng = await getLatLng(results[0]);
-      setCoords(latLng);
-    };
-    posts && getCoords();
-  }, [posts]);
 
   return (
     <div className="w-full flex gap-4">
@@ -146,7 +129,7 @@ const DetailPost = () => {
           {posts && (
             <div className="mt-8">
               <h3 className="font-semibold text-xl my-4">Bản đồ</h3>
-              <Map address={posts[0].address} coords={coords} />
+              <Map address={posts[0].address} />
               <span className="text-gray-500  text-sm py-4 text-justify">
                 {underMap[0]}
               </span>

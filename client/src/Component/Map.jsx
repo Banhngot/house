@@ -1,14 +1,36 @@
-import React, { memo } from "react";
+import React, { memo, useEffect, useState } from "react";
 import GoogleMapReact from "google-map-react";
 import { CiLocationOn } from "react-icons/ci";
+import { geocodeByAddress, getLatLng } from "react-google-places-autocomplete";
 
 const Position = ({ icon }) => <div>{icon}</div>;
-const Map = ({ coords, address }) => {
+const Map = ({ address }) => {
+  const [coords, setCoords] = useState(null);
+
+  useEffect(() => {
+    const getCoords = async () => {
+      const results = await geocodeByAddress(address);
+      const latLng = await getLatLng(results[0]);
+      setCoords(latLng);
+    };
+    if (address) {
+      getCoords();
+    } else {
+      navigator.geolocation.getCurrentPosition(
+        ({ coords: { latitude, longitude } }) => {
+          setCoords({ lat: latitude, lng: longitude });
+        }
+      );
+    }
+  }, [address]);
+
   return (
     <div className="h-[300px] w-full relative">
-      <div className="absolute top-0 z-50 bg-white max-w-[200px] top=[8px] left-[8px] shadow-md p-4 text-xs">
-        {address}
-      </div>
+      {address && (
+        <div className="absolute top-0 z-50 bg-white max-w-[200px] rounded-md top=[8px] left-[8px] shadow-md p-4 text-xs">
+          {address}
+        </div>
+      )}
       <GoogleMapReact
         bootstrapURLKeys={{ key: process.env.REACT_APP_MAP_API }}
         defaultCenter={coords}

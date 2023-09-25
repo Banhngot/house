@@ -45,3 +45,11 @@ export const underMap = [
   "Bạn đang xem nội dung tin đăng: '",
   "'. Mọi thông tin liên quan đến tin đăng này chỉ mang tính chất tham khảo. Nếu bạn có phản hồi với tin đăng này (báo xấu, tin đã cho thuê, không liên lạc được,...), vui lòng thông báo để Dreamhouse có thể xử lý",
 ];
+
+export const attention = [
+  "Nội dung phải viết có dấu",
+  "Tiêu đề không dài quá 100 ký tự",
+  "Nên điền đầy đủ thông tin vào các mục đăng tin để hiệu quả hơn",
+  "Để tăng độ tin cậy và tin rao được nhiều người quan tâm, hãy sửa vị trí tin rao trên bản đồ bằng cách kéo icon tới đúng vị trí tin rao",
+  "Tin đăng có hình ảnh rõ ràng sẽ được xem và gọi rất nhiều lần so với tin không có ảnh, hãy để ảnh để tăng hiệu quả tin đăng",
+];
