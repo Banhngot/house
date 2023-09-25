@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getPostsLimit } from "../../Store/actions";
 import { Slider } from "../../Component";
 import icons from "../../Ultils/icons";
-// import objtoArr from "../../Ultils/Common/objtoArr";
+import { Map } from "../../Component";
+import { geocodeByAddress, getLatLng } from "react-google-places-autocomplete";
 
 const { GrMapLocation, BiMoney, BiArea, BsStopwatch, BsHash } = icons;
 
@@ -12,12 +13,28 @@ const DetailPost = () => {
   const { postId } = useParams();
   const dispatch = useDispatch();
   const { posts } = useSelector((state) => state.post);
-
-  // console.log(objtoArr(posts[0]?.overviews));
+  const [coords, setCoords] = useState(null);
 
   useEffect(() => {
     postId && dispatch(getPostsLimit({ id: postId }));
   }, [postId]);
+  console.log(posts);
+
+  useEffect(() => {
+    // navigator.geolocation.getCurrentPosition(
+    //   ({ coords: { longitude, latitude } }) => {
+    //     setCoords({ lat: latitude, lng: longitude });
+    //   }
+    // );
+
+    const getCoords = async () => {
+      const results = await geocodeByAddress(posts[0]?.address);
+      const latLng = await getLatLng(results[0]);
+      setCoords(latLng);
+    };
+    posts && getCoords();
+  }, [posts]);
+
   return (
     <div className="w-full flex gap-4">
       <div className="w-[70%]  ">
@@ -125,9 +142,12 @@ const DetailPost = () => {
               </tbody>
             </table>
           </div>
-          <div className="mt-8">
-            <h3 className="font-semibold text-xl my-4">Bản đồ</h3>
-          </div>
+          {posts && (
+            <div className="mt-8">
+              <h3 className="font-semibold text-xl my-4">Bản đồ</h3>
+              <Map address={posts[0].address} coords={coords} />
+            </div>
+          )}
         </div>
       </div>
       <div className="w-[30%]">content</div>

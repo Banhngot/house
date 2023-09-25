@@ -20,6 +20,7 @@ import { ImBin } from "react-icons/im";
 import { GrMapLocation } from "react-icons/gr";
 import { BsStopwatch } from "react-icons/bs";
 import { BsHash } from "react-icons/bs";
+import { CiLocationOn } from "react-icons/ci";
 
 const icons = {
   AiOutlinePlusCircle,
@@ -44,6 +45,7 @@ const icons = {
   GrMapLocation,
   BsStopwatch,
   BsHash,
+  CiLocationOn,
 };
 
 export default icons;
