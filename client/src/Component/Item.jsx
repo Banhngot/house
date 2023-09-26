@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { formatVietnameseToString } from "../Ultils/Common/formatVietnameseToString";
 import { path } from "../Ultils/constant";
 
-const indexs = [0, 1, 2, 3];
 const { IoMdStar, AiFillHeart, AiOutlineHeart, BsBookmarkStarFill } = icons;
 const Item = ({
   images,
@@ -36,7 +35,7 @@ const Item = ({
       >
         {images.length > 0 &&
           images
-            .filter((i, index) => indexs.some((i) => i === index))
+            .filter((i, index) => [...Array(4).keys()].some((i) => i === index))
             ?.map((i, index) => {
               return (
                 <img
@@ -108,12 +107,13 @@ const Item = ({
             >
               {`Gọi ${user?.phone}`}
             </button>
-            <button
-              type="button"
+            <a
+              href={`https://zalo.me/${user?.zalo}`}
               className="text-blue-700 p-1 rounded-md border border-blue-700"
+              target="_blank"
             >
               Nhắn Zalo
-            </button>
+            </a>
           </div>
         </div>
       </div>
