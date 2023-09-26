@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getPostsLimit } from "../../Store/actions";
@@ -6,6 +6,8 @@ import { Slider } from "../../Component";
 import icons from "../../Ultils/icons";
 import { Map, Boxinfo, RelatePost } from "../../Component";
 import { underMap } from "../../Ultils/constant";
+import { useNavigate, createSearchParams } from "react-router-dom";
+import { path } from "../../Ultils/constant";
 
 const { GrMapLocation, BiMoney, BiArea, BsStopwatch, BsHash } = icons;
 
@@ -13,11 +15,24 @@ const DetailPost = () => {
   const { postId } = useParams();
   const dispatch = useDispatch();
   const { posts } = useSelector((state) => state.post);
+  const navigate = useNavigate();
 
   useEffect(() => {
     postId && dispatch(getPostsLimit({ id: postId }));
   }, [postId]);
-  console.log(posts);
+
+  const handleFilterLabel = () => {
+    const titleSearch = `Tìm kiếm tin đăng theo chuyên mục ${posts[0]?.labelData?.value}`;
+    navigate(
+      {
+        pathname: `/${path.SEARCH}`,
+        search: createSearchParams({
+          labelCode: posts[0]?.labelData?.code,
+        }).toString(),
+      },
+      { state: { titleSearch } }
+    );
+  };
 
   return (
     <div className="w-full flex gap-4">
@@ -34,8 +49,11 @@ const DetailPost = () => {
             </h2>
             <div className="flex items-center gap-2">
               <span>Chuyên mục:</span>
-              <span className="text-blue-600 underline font-medium hover:text-orange-400 cursor-pointer">
-                {posts[0]?.overviews?.area}
+              <span
+                onClick={handleFilterLabel}
+                className="text-blue-600 underline font-medium hover:text-orange-400 cursor-pointer"
+              >
+                {posts[0]?.labelData?.value}
               </span>
             </div>
             <div className="flex items-center gap-2">
