@@ -27,6 +27,7 @@ const Boxinfo = ({ userData }) => {
       <a
         className="bg-white py-2 flex items-center justify-center gap-2 w-full rounded-md text-black font-bold text-lg"
         href={`https://zalo.me/{${userData?.zalo}}`}
+        target="_blank"
       >
         <AiFillPhone />
         {"Nhắn Zalo"}
